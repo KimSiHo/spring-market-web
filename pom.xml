@@ -14,9 +14,9 @@
     <name>jpashop</name>
     <description>Demo project for Spring Boot</description>
 
-    <properties>
+ <!--   <properties>
         <java.version>11</java.version>
-    </properties>
+    </properties>-->
 
     <dependencies>
         <dependency>
