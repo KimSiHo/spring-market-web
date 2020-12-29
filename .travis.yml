@@ -10,7 +10,6 @@ brances:
 cache:
   directories:
     - '$HOME/.m2/repository'
-    - '$HOME/.mvn'
 
 script: "./mvnw clean build"
 
