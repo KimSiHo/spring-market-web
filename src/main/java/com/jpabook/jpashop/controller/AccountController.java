@@ -2,7 +2,7 @@ package com.jpabook.jpashop.controller;
 
 import com.jpabook.jpashop.domain.Address;
 import com.jpabook.jpashop.domain.Member;
-import com.jpabook.jpashop.service.MemberService;
+import com.jpabook.jpashop.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,21 +15,26 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class MemeberController {
+public class AccountController {
 
-    private final MemberService memberService;
+    private final AccountService accountService;
 
-    @GetMapping("/members/new")
-    public String createForm(Model model) {
-        model.addAttribute("memberForm", new MemberForm());
-        return "members/createMemberForm";
+    @GetMapping("/sign-up")
+    public String signUp(){
+        return "account/sign-up";
     }
 
-    @PostMapping("/members/new")
-    public String create(@Valid MemberForm memberForm, BindingResult result) {
+    @GetMapping("/account/new")
+    public String createForm(Model model) {
+        model.addAttribute("memberForm", new AccountForm());
+        return "account/createAccountForm";
+    }
+
+    @PostMapping("/account/new")
+    public String create(@Valid AccountForm memberForm, BindingResult result) {
 
         if(result.hasErrors()) {
-            return "members/createMemberForm";
+            return "account/createAccountForm";
         }
 
         Address address = new Address(memberForm.getCity(), memberForm.getStreet(), memberForm.getZipcode());
@@ -38,15 +43,15 @@ public class MemeberController {
         member.setName(memberForm.getName());
         member.setAddress(address);
 
-        memberService.join(member);
+        accountService.join(member);
         return "redirect:/";
     }
 
-    @GetMapping("/members")
+    @GetMapping("/account")
     public String list(Model model) {
-        List<Member> members = memberService.findMembers();
-        model.addAttribute("members", members);
-        return "members/memberList";
+        List<Member> accounts = accountService.findMembers();
+        model.addAttribute("accounts", accounts);
+        return "account/accountList";
     }
 
 }

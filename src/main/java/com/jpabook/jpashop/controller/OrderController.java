@@ -5,14 +5,13 @@ import com.jpabook.jpashop.domain.Order;
 import com.jpabook.jpashop.domain.item.Item;
 import com.jpabook.jpashop.repository.OrderSearch;
 import com.jpabook.jpashop.service.ItemService;
-import com.jpabook.jpashop.service.MemberService;
+import com.jpabook.jpashop.service.AccountService;
 import com.jpabook.jpashop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -20,7 +19,7 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
-    private final MemberService memberService;
+    private final AccountService memberService;
     private final ItemService itemService;
 
     @GetMapping("/order")
