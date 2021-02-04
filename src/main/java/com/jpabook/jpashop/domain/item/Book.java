@@ -1,3 +1,4 @@
+/*
 package com.jpabook.jpashop.domain.item;
 
 import lombok.Getter;
@@ -14,3 +15,4 @@ public class Book extends Item {
     private String author;
     private String isbn;
 }
+*/

@@ -1,0 +1,20 @@
+version: '3.0'
+
+services:
+  db-server:
+    image: oscarfonts/h2
+    ports:
+      - "1521:1521"
+      - "9001:81"
+    restart: always
+    volumes:
+      - C:\Users\김시호\docker_db:/opt/h2-data
+  app:
+    depends_on:
+      - db-server
+    build: .
+    links:
+      - db-server
+    restart: always
+    ports:
+      - "9090:8080"

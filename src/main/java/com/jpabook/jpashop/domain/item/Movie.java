@@ -1,3 +1,4 @@
+/*
 package com.jpabook.jpashop.domain.item;
 
 import lombok.Getter;
@@ -14,3 +15,4 @@ public class Movie extends Item {
     private String director;
     private String actor;
 }
+*/

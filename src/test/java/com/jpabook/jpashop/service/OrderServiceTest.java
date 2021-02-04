@@ -1,13 +1,12 @@
+/*
 package com.jpabook.jpashop.service;
 
 import com.jpabook.jpashop.domain.Address;
-import com.jpabook.jpashop.domain.Member;
 import com.jpabook.jpashop.domain.Order;
 import com.jpabook.jpashop.domain.OrderStatus;
 import com.jpabook.jpashop.domain.item.Book;
 import com.jpabook.jpashop.exception.NotEnoughStockException;
 import com.jpabook.jpashop.repository.OrderRepository;
-import javassist.CannotCompileException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +19,7 @@ import static org.junit.Assert.*;
 
 @SpringBootTest
 @Transactional
+
 class OrderServiceTest {
 
     @Autowired EntityManager em;
@@ -101,4 +101,4 @@ class OrderServiceTest {
         return member;
     }
 
-}
+}*/

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter @Setter @EqualsAndHashCode(of = "id")
@@ -37,4 +38,17 @@ public class Account {
 
     @Embedded
     private Address address;
+
+    public void generateEmailCheckToken() {
+        this.emailCheckToken = UUID.randomUUID().toString();
+    }
+
+    public void completeSignUp() {
+        this.emailVerified = true;
+        this.joinedAt = LocalDateTime.now();
+    }
+
+    public boolean isValidToken(String token) {
+        return this.emailCheckToken.equals(token);
+    }
 }

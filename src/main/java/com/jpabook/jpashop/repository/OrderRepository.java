@@ -1,3 +1,4 @@
+/*
 package com.jpabook.jpashop.repository;
 
 import com.jpabook.jpashop.domain.Order;
@@ -25,7 +26,8 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
-    /*public List<Order> findAll(OrderSearch orderSearch) {
+    */
+/*public List<Order> findAll(OrderSearch orderSearch) {
 
         return em.createQuery("select  o from Order o join o.member m" +
                 " where o.status = :status " +
@@ -34,11 +36,14 @@ public class OrderRepository {
                 .setParameter("name", orderSearch.getMemberName())
                 .setMaxResults(1000) //최대 1000건
                 .getResultList();
-    }*/
+    }*//*
 
-    /**
+
+    */
+/**
      * JPA Criteria
-     */
+     *//*
+
     public List<Order> findAllbyCriteria(OrderSearch orderSearch) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Order> cq = cb.createQuery(Order.class);
@@ -66,3 +71,4 @@ public class OrderRepository {
     }
 
 }
+*/
