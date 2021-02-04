@@ -16,28 +16,6 @@ cache:
 
 script: "./mvnw clean install"
 
-before_deploy:
-  - zip -r freelec-jpashop-webservice *
-  - mkdir -p deploy
-  - mv freelec-jpashop-webservice.zip deploy/freelec-jpashop-webservice.zip
-
-deploy:
-  - provider: s3
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
-    bucket: freelec-jpashop-build
-    region: ap-northeast-2
-    skip_cleanup: true
-    acl: private
-    local_dir: deploy
-    wait-until-deployed: true
-
-  - provider: codedeploy
-    access_key_id: $AWS_ACCESS_KEY
-    secret_acces_key: $AWS_SECRET_KEY
-
-
-
 
 # CI 실행 완료 시 메일로 알람
 notifications:
