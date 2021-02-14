@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="bbs_fragments.html :: bbs_head"></head>
+<body>
+
+    <h1>게시판 서비스</h1>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/bbs/posts/save" role="button" class="btn btn-primary">글 등록</a>
+            </div>
+        </div>
+        <br>
+        <!-- 목록 출력 영역 -->
+        <table class="table table-horizontal table-bordered">
+            <thead class="thead-strong">
+            <tr>
+                <th>게시글번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>최종수정일</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+            <tr th:each="post:${posts}">
+                <td th:text="${post.id}"> - </td>
+                <td>
+                    <a href="#" th:href="@{/bbs/posts/update/{id} (id=${post.id})}" th:text="*{post.title}"></a>
+                </td>
+                <td th:text="${post.author}"> - </td>
+                <td th:text="${post.modifiedDate}"> - </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer th:replace="bbs_fragments.html :: bbs_footer"></footer>
+</body>
+</html>
