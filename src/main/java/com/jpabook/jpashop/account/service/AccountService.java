@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -61,7 +62,7 @@ public class AccountService implements UserDetailsService {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 new UserAccount(account),
                 account.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+                Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContextHolder.getContext().setAuthentication(token);
     }
 
