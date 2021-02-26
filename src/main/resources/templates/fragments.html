@@ -18,11 +18,13 @@
     </style>
 </head>
 
+<!-- --------------------------------------------------- 메뉴 --------------------------------------------------- -->
+
 <nav th:fragment="main-nav" class="navbar navbar-expand-sm navbar-dark bg-dark">
     <a class="navbar-brand" href="/" th:href="@{/}">
         <img src="/images/logo_sm.png" width="30" height="30">
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -30,7 +32,8 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <form th:action="@{/search/study}" class="form-inline" method="get">
-                    <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="스터디 찾기" aria-label="Search" />
+                    <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="중고상품 찾기"/>
+                    <button class="btn btn-success" type="submit">검색</button>
                 </form>
             </li>
         </ul>
@@ -43,24 +46,23 @@
                 <a class="nav-link" th:href="@{/sign-up}">가입</a>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link" th:href="@{/notifications}">
-                    <i class="fa fa-bell-o" aria-hidden="true"></i>
+                <a class="nav-link" th:href="@{/noti}">
+                    <i class="fa fa-bell-o" aria-hidden="true"><span class="badge badge-info" th:text="${notiCount}"> - </span></i>
                 </a>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link btn btn-outline-primary" th:href="@{/notifications}">
-                    <i class="fa fa-plus" aria-hidden="true"></i> 스터디 개설
+                <a class="nav-link btn btn-outline-primary" th:href="@{/upload/product}">
+                    <i class="fa fa-plus" aria-hidden="true"></i> 상품 등록
                 </a>
             </li>
             <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown">
                     <svg th:if="${#strings.isEmpty(account?.profileImage)}" th:data-jdenticon-value="${#authentication.name}"
                          width="24" height="24" class="rounded border bg-light"></svg>
                     <img th:if="${!#strings.isEmpty(account?.profileImage)}" th:src="${account.profileImage}"
                          width="24" height="24" class="rounded border"/>
                 </a>
-                <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropdown">
+                <div class="dropdown-menu dropdown-menu-sm-right">
                     <h6 class="dropdown-header">
                         <span sec:authentication="name">Username</span>
                     </h6>
@@ -77,12 +79,32 @@
     </div>
 </nav>
 
+<div th:fragment="settings-menu (currentMenu)" class="list-group">
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'profile'}? active" href="#" th:href="@{/settings/profile}">프로필</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'password'}? active" href="#" th:href="@{/settings/password}">패스워드</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'notifications'}? active" href="#" th:href="@{/settings/notifications}">알림</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'tags'}? active" href="#" th:href="@{/settings/tags}">관심 주제</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'zones'}? active" href="#" th:href="@{/settings/zones}">활동 지역</a>
+    <a class="list-group-item list-group-item-action list-group-item-danger" th:classappend="${currentMenu == 'account'}? active" href="#" th:href="@{/settings/account}">계정</a>
+</div>
+
+
+<div th:fragment="main-menu (currentMenu)" class="list-group">
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'main'}? active" href="#" th:href="@{/}">홈</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'bbs'}? active" href="#" th:href="@{/bbs}">게시판</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'new-product'}? active" href="#" th:href="@{/upload/product}">상품 등록</a>
+</div>
+
+<!-- --------------------------------------------------- 메뉴 --------------------------------------------------- -->
+
 <footer th:fragment="footer">
     <div class="row justify-content-center">
         <img class="mb-2" src="/images/logo_long_kr.jpg" alt="" width="100">
         <small class="d-block mb-3 text-muted">&copy; 2020</small>
     </div>
 </footer>
+
+<!-- --------------------------------------------------- 스크립트 --------------------------------------------------- -->
 
 <script type="application/javascript" th:fragment="form-validation">
     (function () {
@@ -106,13 +128,89 @@
     }())
 </script>
 
-<div th:fragment="settings-menu (currentMenu)" class="list-group">
-    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'profile'}? active" href="#" th:href="@{/settings/profile}">프로필</a>
-    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'password'}? active" href="#" th:href="@{/settings/password}">패스워드</a>
-    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'notifications'}? active" href="#" th:href="@{/settings/notifications}">알림</a>
-    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'tags'}? active" href="#" th:href="@{/settings/tags}">관심 주제</a>
-    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'zones'}? active" href="#" th:href="@{/settings/zones}">활동 지역</a>
-    <a class="list-group-item list-group-item-action list-group-item-danger" th:classappend="${currentMenu == 'account'}? active" href="#" th:href="@{/settings/account}">계정</a>
-</div>
+<script type="application/javascript" th:fragment="bbs-ajax">
+    var main = {
+        init : function () {
+            var _this = this;
+            $('#btn-save').on('click', function () {
+                _this.save();
+            });
+
+            $('#btn-update').on('click', function () {
+                _this.update();
+            });
+
+            $('#btn-delete').on('click', function () {
+                _this.delete();
+            });
+        },
+        save : function () {
+            var data = {
+                title: $('#title').val(),
+                author: $('#author').val(),
+                content: $('#content').val(),
+            };
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajax({
+                type: 'POST',
+                url: '/bbs/api/v1/post',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                dataType: 'json',
+                contentType:'application/json; charset=utf-8',
+                data: JSON.stringify(data)
+            }).done(function() {
+                alert('글이 등록되었습니다.');
+                window.location.href = '/bbs';
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        },
+        update : function () {
+            var data = {
+                title: $('#title').val(),
+                content: $('#content').val()
+            };
+
+            var id = $('#id').val();
+
+            $.ajax({
+                type: 'PUT',
+                url: '/bbs/api/v1/post/'+id,
+                dataType: 'json',
+                contentType:'application/json; charset=utf-8',
+                data: JSON.stringify(data)
+            }).done(function() {
+                alert('글이 수정되었습니다.');
+                window.location.href = '/bbs';
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        },
+        delete : function () {
+            var id = $('#id').val();
+
+            $.ajax({
+                type: 'DELETE',
+                url: '/bbs/api/v1/post/'+id,
+                dataType: 'json',
+                contentType:'application/json; charset=utf-8'
+            }).done(function() {
+                alert('글이 삭제되었습니다.');
+                window.location.href = '/bbs';
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
+
+    };
+
+    main.init();
+</script>
+
+<!-- --------------------------------------------------- 스크립트 --------------------------------------------------- -->
 
 </html>

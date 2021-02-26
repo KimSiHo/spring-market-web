@@ -32,9 +32,8 @@ public class AccountController {
         return "account/sign-up";
     }
 
-
     @PostMapping("/sign-up")
-    public String signUpSubmit(@Valid @ModelAttribute SignUpForm signUpForm, Errors errors) {
+    public String signUpSubmit(@Valid SignUpForm signUpForm, Errors errors) {
         if (errors.hasErrors()) {
             return "account/sign-up";
         }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+    <div th:replace="fragments :: main-nav"></div>
+
+    <div class="row">
+        <div class="col-2">
+
+        </div>
+
+        <div class="col-md-6" th:object="${product}">
+            <div class="card">
+                <div class="card-header">중고 상품</div>
+                <img class="card-img-top" th:src="'/files/' + *{fileName} + '.jpg'" style="height: 500px"/>
+                    <div class="card-body text-center">
+                        <p class="card-text" th:text="${product.pio}">Some text inside the first card</p>
+                    </div>
+                <br />
+                <div class="card-footer"><p th:text="*{keyword}"> 상품 설명입니다. </p></div>
+                <br />
+            </div>
+
+            <div class="card">
+                <div class="card-header">사용자 정보</div>
+
+                <div class="card-body text-center">
+                    <p class="card-text" th:text="'사용자 아이디 : ' + ${product.account.nickname}"> 사용자 아이디 </p>
+                </div>
+                <br />
+                <div class="card-footer"><p th:text="${product.account.email}"> 사용자 이메일 </p></div>
+                <br />
+            </div>
+
+            <br/> <br/>
+            <a th:href=" '/buy/' + ${product.id}" class="btn btn-primary" >구매 요청</a>
+        </div>
+    </div>
+
+</body>
+</html>

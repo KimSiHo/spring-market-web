@@ -27,12 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers("/", "/login", "sign-up",
-                        "email-login", "/check-email-login", "/login-link", "/bbs/**").permitAll()
-                .mvcMatchers(HttpMethod.GET,  "/bbs/**").permitAll()
-                .mvcMatchers(HttpMethod.POST, "/bbs/**", "/bbs/api/v1/posts/**").permitAll()
-                .mvcMatchers(HttpMethod.PUT, "/bbs/**").permitAll()
-                .mvcMatchers(HttpMethod.DELETE, "/bbs/**").permitAll()
+                .mvcMatchers("/", "sign-up", "email-login", "/check-email-login").permitAll()
                 .anyRequest().authenticated();
 
                  http.formLogin()
@@ -57,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .mvcMatchers("/node_modules/**")
+                .antMatchers("/files/**")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
-
 }

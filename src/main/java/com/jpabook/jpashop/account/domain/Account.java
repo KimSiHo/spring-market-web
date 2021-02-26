@@ -1,5 +1,6 @@
 package com.jpabook.jpashop.account.domain;
 
+import com.jpabook.jpashop.common.domain.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import java.util.UUID;
 @Getter @Setter @EqualsAndHashCode(of = "id")
 @Builder @AllArgsConstructor
 @NoArgsConstructor
-public class Account {
+public class Account extends BaseTimeEntity {
 
     @Id @GeneratedValue
     private Long id;

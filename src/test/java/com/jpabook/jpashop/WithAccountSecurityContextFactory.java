@@ -29,5 +29,6 @@ public class WithAccountSecurityContextFactory implements WithSecurityContextFac
         Authentication authentication = new UsernamePasswordAuthenticationToken(principal, principal.getPassword(), principal.getAuthorities());
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(authentication);
-        return context;    }
+        return context;
+    }
 }

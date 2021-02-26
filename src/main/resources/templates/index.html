@@ -1,18 +1,35 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments.html :: head"></head>
+<head th:replace="fragments :: head"></head>
 <body class="bg-light">
-    <div th:replace="fragments.html :: main-nav"></div>
+
+    <div th:replace="fragments :: main-nav"></div>
     <div class="alert alert-warning" role="alert" th:if="${account != null && !account.emailVerified}">
         스터디올레 가입을 완료하려면 <a href="#" th:href="@{/check-email}" class="alert-link">계정 인증 이메일을 확인</a>하세요.
     </div>
-    <div class="container">
-        <div class="py-5 text-center">
-            <h2>스터디올래</h2>
-         </div>
-         <div th:replace="fragments.html :: footer"></div>
+
+    <br /><br />
+    <div class="row">
+        <div class="col-2">
+            <div th:replace="fragments :: main-menu(currentMenu='main')"></div>
+        </div>
+
+
+        <div class="col-10">
+            <div class="card-columns">
+                <div class="card bg-light" style="width: 500px" th:each="product:${products}">
+                    <div class="card-header">중고 상품</div>
+                    <img class="card-img-top" th:src="${product.productImageFile[0].imageURL}" />
+                    <div class="card-body text-center">
+                        <p class="card-text" th:text="${product.pio}">Some text inside the first card</p>
+                    </div>
+                    <div class="card-footer"><a th:href="'product/detail/' + ${product.id}">상품 상세보기</a></div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <div th:replace="fragments.html :: footer"></div>
 </body>
 </html>

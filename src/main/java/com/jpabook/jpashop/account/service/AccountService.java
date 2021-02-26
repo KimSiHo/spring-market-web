@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.List;
 
 @Service
 @Transactional
@@ -32,7 +31,6 @@ public class AccountService implements UserDetailsService {
     private final JavaMailSender javaMailSender;
     private final PasswordEncoder passwordEncoder;
 
-    @Transactional
     public Account processNewAccount(SignUpForm signUpForm) {
         Account newAccount = saveNewAccount(signUpForm);
         newAccount.generateEmailCheckToken();
@@ -58,6 +56,11 @@ public class AccountService implements UserDetailsService {
         javaMailSender.send(mailMessage);
     }
 
+    public void completeSignUp(Account account) {
+        account.completeSignUp();
+        login(account);
+    }
+
     public void login(Account account) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 new UserAccount(account),
@@ -79,12 +82,6 @@ public class AccountService implements UserDetailsService {
         }
 
         return new UserAccount(account);
-
-    }
-
-    public void completeSignUp(Account account) {
-        account.completeSignUp();
-        login(account);
     }
 
     public void updateProfile(Account account, Profile profile) {

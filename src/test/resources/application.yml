@@ -5,6 +5,10 @@ spring:
     password:
     driver-class-name: org.h2.Driver
 
+  h2:
+    console:
+      enabled: true
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -14,9 +18,15 @@ spring:
         format_sql: true
 
   profiles:
-    active: local
+    active: local, test
+
+
 
 logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+
+local:
+  server:
+    port: 7070
