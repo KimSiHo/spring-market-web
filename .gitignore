@@ -40,4 +40,4 @@ src/main/resources/static/node_modules
 src/main/resources/static/node
 
 ### credentials ###
-appplication-credentials.yml
+src/main/resources/application-credentials.yml

@@ -12,9 +12,9 @@
         <div class="col-md-6" th:object="${product}">
             <div class="card">
                 <div class="card-header">중고 상품</div>
-                <img class="card-img-top" th:src="'/files/' + *{fileName} + '.jpg'" style="height: 500px"/>
+                <img class="card-img-top" th:src="${product.productImageFile[0].imageURL}" style="height: 500px"/>
                     <div class="card-body text-center">
-                        <p class="card-text" th:text="${product.pio}">Some text inside the first card</p>
+                        <p class="card-text" th:text="${product.bio}">Some text inside the first card</p>
                     </div>
                 <br />
                 <div class="card-footer"><p th:text="*{keyword}"> 상품 설명입니다. </p></div>

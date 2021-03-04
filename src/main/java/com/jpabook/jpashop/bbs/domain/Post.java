@@ -1,7 +1,7 @@
 package com.jpabook.jpashop.bbs.domain;
 
 import com.jpabook.jpashop.account.domain.Account;
-import com.jpabook.jpashop.common.domain.BaseTimeEntity;
+import com.jpabook.jpashop.common.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,12 +24,22 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "writer_id")
     private Account writer;
 
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", writer=" + writer +
+                '}';
     }
 }

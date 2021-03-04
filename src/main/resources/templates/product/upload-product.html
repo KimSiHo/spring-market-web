@@ -15,15 +15,26 @@
             <form action="#"
                   th:action="@{/upload/product}" th:object="${productUploadForm}" method="post" enctype="multipart/form-data" novalidate>
                 <div class="form-group">
-                    <label for="pio">상품 소개</label>
-                    <input id="pio" type="text" th:field="*{pio}" class="form-control"
-                           placeholder="상품 소개를 부탁합니다."  required>
+                    <label for="bio">상품 소개</label>
+                    <input id="bio" type="text" th:field="*{bio}" class="form-control"
+                           placeholder="상품 소개를 부탁합니다." required>
                     <small id="pioHelp" class="form-text text-muted">
                         길지 않게 50자 이내로 입력하세요.
                     </small>
-                    <small class="form-text text-danger" th:if="${#fields.hasErrors('pio')}" th:errors="*{pio}">
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}">
                         조금 길어요.
                     </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="productKind">업로드 상품 종류 선택</label>
+                    <select id="productKind" th:field="*{productKind}" class="form-control"
+                            placeholder="상품 종류를 선택해주세요." required>
+                        <option th:value="${T(com.jpabook.jpashop.product.web.ProductKind).furniture}">가구</option>
+                        <option th:value="${T(com.jpabook.jpashop.product.web.ProductKind).shoes}">신발</option>
+                        <option th:value="${T(com.jpabook.jpashop.product.web.ProductKind).cloth}">옷</option>
+                        <option th:value="${T(com.jpabook.jpashop.product.web.ProductKind).electronic}">전자제품</option>
+                    </select>
                 </div>
 
                 <div class="form-group">

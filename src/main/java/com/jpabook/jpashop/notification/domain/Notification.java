@@ -1,7 +1,7 @@
-package com.jpabook.jpashop.noti.domain;
+package com.jpabook.jpashop.notification.domain;
 
 import com.jpabook.jpashop.account.domain.Account;
-import com.jpabook.jpashop.common.domain.BaseTimeEntity;
+import com.jpabook.jpashop.common.BaseTimeEntity;
 import com.jpabook.jpashop.product.domain.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor @Builder
 @NoArgsConstructor
 @Entity
-public class Noti extends BaseTimeEntity {
+public class Notification extends BaseTimeEntity {
 
     @Id @GeneratedValue
     private Long id;
@@ -32,4 +32,7 @@ public class Noti extends BaseTimeEntity {
     private Account recipient;
 
     private String message;
+
+    @Enumerated(value = EnumType.STRING)
+    private NotificationStatus notificationStatus;
 }

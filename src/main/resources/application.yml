@@ -1,4 +1,5 @@
 spring:
+  #DB 관련
   datasource:
     url: jdbc:postgresql://localhost:5433/springboot
     username: postgres
@@ -8,15 +9,7 @@ spring:
     console:
       enabled: true
 
-  profiles:
-    active: local
-    include: credentials
-
-  servlet:
-    multipart:
-      max-file- size: 10MB
-      max-request-size: 10MB
-
+  #JPA 설정
   jpa:
     hibernate:
       ddl-auto: create
@@ -25,20 +18,33 @@ spring:
         #show_sql: true
         format_sql: true
 
+  #프로필 관련
+  profiles:
+    active: local
+    include: credentials
+
+  #파일 업로드 관련
+  servlet:
+    multipart:
+      max-file- size: 10MB
+      max-request-size: 10MB
+
+
+#로깅 관련
 logging:
   level:
-    org.hibernate.SQL: debug
+    root: debug
   logback:
     rollingpolicy:
       clean-history-on-start:
 
+
+#업로드 포트
 server:
   port: 7070
 
-upload:
-  path: C:\Users\김시호\Desktop\app이미지
 
-
+#AWS s3 업로드 경로 ( 상품 이미지 )
 cloud:
   aws:
     s3:
@@ -49,3 +55,9 @@ cloud:
       auto: false
     credentials:
       instanceProfile: true
+
+#로컬 파일 시스템 업로드 경로 ( 사용중 x )
+local:
+  filesystem:
+    upload:
+      path: C:\Users\김시호\Desktop\app이미지

@@ -2,18 +2,38 @@ package com.jpabook.jpashop.common.config;
 
 import com.jpabook.jpashop.account.domain.Account;
 import com.jpabook.jpashop.account.domain.AccountRepository;
-import com.jpabook.jpashop.noti.domain.Noti;
-import com.jpabook.jpashop.noti.domain.NotiRepository;
+import com.jpabook.jpashop.bbs.domain.Post;
+import com.jpabook.jpashop.bbs.domain.PostRepository;
+import com.jpabook.jpashop.notification.domain.Notification;
+import com.jpabook.jpashop.notification.domain.NotificationRepository;
+import com.jpabook.jpashop.notification.domain.NotificationStatus;
 import com.jpabook.jpashop.product.domain.Product;
 import com.jpabook.jpashop.product.domain.ProductRepository;
-import com.jpabook.jpashop.product.domain.ProductStatus;
+import com.jpabook.jpashop.product.service.ProductService;
+import com.jpabook.jpashop.product.web.ProductKind;
+import com.jpabook.jpashop.product.web.ProductUploadForm;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 @Profile("!test")
 @RequiredArgsConstructor
@@ -23,7 +43,10 @@ public class DataInsert implements ApplicationRunner {
 
     private final AccountRepository accountRepository;
     private final ProductRepository productRepository;
-    private final NotiRepository notiRepository;
+    private final NotificationRepository notificationRepository;
+    private final PostRepository postRepository;
+    private final ProductService productService;
+
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -33,54 +56,141 @@ public class DataInsert implements ApplicationRunner {
         Account account2 = createAccount("kim125", "kim125@naver.com", "wkwjsrj");
         Account account3 = createAccount("kim9810", "kim9810@naver.com", "wkwjsrj");
 
-   /*     createProduct("0ad63f3cf92a41191fbc71ae9a52deb0", "shoes", "아디다스 신발입니다", ProductStatus.onSale, account);
-        createProduct("unnamed", "shoes", "퓨마 신발입니다", ProductStatus.onSale, account1);
+        List<Product> products = createProduct();
 
-        createProduct("9b0e3ed41433acedd116f8de1b4909ed9c6bcc7b8c82fe9c745a8940514fa28b", "shelf", "큰 선반입니다", ProductStatus.onSale, account1);
-        createProduct("unnamed (1)", "shelf", "작은 선반입니다", ProductStatus.onSale, account2);
+        Product buyRequestProduct = products.get(3);
+        Product buyRequestProduct2 = products.get(6);
+        createNoti(account2, buyRequestProduct.getAccount(), buyRequestProduct, "구매 요청합니다");
+        createNoti(account3, buyRequestProduct2.getAccount(), buyRequestProduct2, "구매 요청합니다");
 
-        createProduct("a6d7857120c70a00a8e67515697ac681a822356d07816ea67d7c5b5ce4f7403f", "monitor", "모니터 입니다", ProductStatus.onSale, account2);
+        createPost(account);
 
-        createProduct("다운로드 (1)", "tshirt", "큰 티셔츠입니다", ProductStatus.onSale, account2);
-        createProduct("다운로드", "tshirt", "검정 티셔츠입니다", ProductStatus.onSale, account3);
-
-        Product audio = createProduct("다운로드 (2)", "audio", "낣은 오디오입니다.", ProductStatus.onSale, account);
-        createProduct("다운로드 (3)", "audio", "비싼 오디오입니다.", ProductStatus.onSale, account);
-        createProduct("다운로드 (4)", "audio", "저렴한 오디오입니다.", ProductStatus.onSale, account2);
-
-        createProduct("다운로드 (5)", "microwave", "전자레인지 입니다.", ProductStatus.soldOut, account1);
-
-        createNoti(account2, account, audio, "구매 요청합니다");
-        createNoti(account3, account, audio, "구매 요청합니다");*/
-
-        createPost();
 
     }
 
-    private void createPost() {
+    private void createPost(Account account) {
+
+        IntStream.rangeClosed(1, 154).forEach(i -> {
+            Post newPost = Post.builder()
+                               .title("test" + i)
+                               .content("content test" + i)
+                               .writer(account)
+                               .build();
+
+            postRepository.save(newPost);
+        });
+
     }
 
     private void createNoti(Account sender, Account recipient, Product audio, String msg) {
-        Noti noti = Noti.builder()
+        Notification notification = Notification.builder()
                         .sender(sender)
                         .recipient(recipient)
                         .product(audio)
                         .message(msg)
+                        .notificationStatus(NotificationStatus.purchaseRequest)
                         .build();
 
-        notiRepository.save(noti);
+        notificationRepository.save(notification);
     }
 
-    private Product createProduct(String fileName, String keyword, String pio, ProductStatus productStatus, Account account) {
-        Product product =Product.builder()
-                .fileName(fileName)
-                .keyword(keyword)
-                .pio(pio)
-                .productStatus(productStatus)
-                .account(account)
-                .build();
+    private List<Product> createProduct() throws IOException {
+        String root = "init-data/";
+        String[] categories = {"가구", "신발", "옷", "전자제품"};
 
-        return productRepository.save(product);
+        List<Product> retProducts = new ArrayList<Product>();
+        for (String category : categories) {
+            String strCategoryDirectory = root + category;
+            String strProductDescDirectory = strCategoryDirectory + "\\product-description";
+
+            File categoryDirectory = new File(strCategoryDirectory);
+            File productDescDirectory = new File(strProductDescDirectory);
+
+            File[] productImgfiles = categoryDirectory.listFiles((parent, fileName) -> fileName.endsWith("jpg") ||
+                    fileName.endsWith("png") || fileName.endsWith("jpeg"));
+
+            retProducts.addAll(InsertProductData(categoryDirectory, productDescDirectory, productImgfiles));
+        }
+
+        return retProducts;
+    }
+
+    private  List<Product> InsertProductData(File categoryDirectory, File productDescDirectory, File[] productImgfiles) throws IOException {
+
+        List<Product> retProducts = new ArrayList<Product>();
+
+        for (File productImgfile : productImgfiles) {
+            String fileName = FilenameUtils.removeExtension(productImgfile.getName());
+
+            // 매칭되는 거 하나 있다고 가정
+            File[] files = productDescDirectory.listFiles((parent, txtFileName) -> txtFileName.startsWith(fileName));
+            List<String> lines = Files.readAllLines(files[0].toPath());
+
+            ProductUploadForm productUploadForm = new ProductUploadForm();
+            Account owner = null;
+            for (String line : lines) {
+                Integer keyIndex = line.indexOf(">");
+                String keyword = line.substring(0, keyIndex);
+                String value = StringUtils.trim(line.substring(keyIndex + 1));
+
+                switch (keyword){
+                    case "bio":
+                        productUploadForm.setBio(value);
+                        break;
+                    case "keyword":
+                        switch (value) {
+                            case "가구":
+                                productUploadForm.setProductKind(ProductKind.furniture);
+                                break;
+                            case "신발":
+                                productUploadForm.setProductKind(ProductKind.shoes);
+                                break;
+                            case "옷":
+                                productUploadForm.setProductKind(ProductKind.cloth);
+                                break;
+                            case "전자제품":
+                                productUploadForm.setProductKind(ProductKind.electronic);
+                                break;
+                            default:
+                                System.out.println("일치하지 않는 키워드 입니다");
+                                break;
+                        }
+                        break;
+                    case "owner":
+                        owner = accountRepository.findByNickname(value);
+                        break;
+                    default:
+                        System.out.println("not matching keyword");
+                        break;
+                }
+            }
+
+            File resized = resize(productImgfile);
+            FileInputStream fileInputStream = new FileInputStream(resized);
+            MockMultipartFile mockMultipartFile = new MockMultipartFile(resized.getName(), resized.getName(), null, fileInputStream);
+
+            retProducts.add(productService.upload(mockMultipartFile, owner, productUploadForm));
+        }
+        return retProducts;
+    }
+
+    private File resize(File productImgfile) throws IOException {
+        String extension = FilenameUtils.getExtension(productImgfile.getName());
+
+        String strPaentDir = productImgfile.getParent();
+        String strResizeDir = strPaentDir + "\\resized\\";
+        String strDestFile = strResizeDir + productImgfile.getName();
+        File destFile = new File(strDestFile);
+        FileUtils.forceMkdirParent(destFile);
+
+        BufferedImage read = ImageIO.read(productImgfile);
+
+        Image scaledInstance = read.getScaledInstance(300, 300, Image.SCALE_DEFAULT);
+        BufferedImage bufferedImage = new BufferedImage(300, 300, BufferedImage.TYPE_INT_RGB);
+        bufferedImage.getGraphics().drawImage(scaledInstance, 0,0,null);
+
+        ImageIO.write(bufferedImage, extension, destFile);
+        return destFile;
     }
 
     private Account createAccount(String nickname, String email, String passwd) {

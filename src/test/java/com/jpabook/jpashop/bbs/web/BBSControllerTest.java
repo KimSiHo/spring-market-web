@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class BbsControllerTest {
+class BBSControllerTest {
 
     @Autowired private PostRepository postRepository;
     @Autowired private AccountRepository accountRepository;

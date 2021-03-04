@@ -1,4 +1,4 @@
-package com.jpabook.jpashop.common.domain;
+package com.jpabook.jpashop.product.domain;
 
 import com.jpabook.jpashop.product.domain.Product;
 import lombok.AllArgsConstructor;

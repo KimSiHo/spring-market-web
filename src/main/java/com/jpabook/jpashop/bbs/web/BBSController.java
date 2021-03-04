@@ -4,11 +4,16 @@ import com.jpabook.jpashop.account.domain.Account;
 import com.jpabook.jpashop.account.service.CurrentUser;
 import com.jpabook.jpashop.bbs.domain.Post;
 import com.jpabook.jpashop.bbs.domain.PostRepository;
+import com.jpabook.jpashop.bbs.service.BBSService;
 import com.jpabook.jpashop.bbs.web.dto.PostListResponseDto;
 import com.jpabook.jpashop.bbs.web.dto.PostResponseDto;
 import com.jpabook.jpashop.bbs.web.dto.PostSaveRequestDto;
 import com.jpabook.jpashop.bbs.web.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -18,23 +23,31 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
-public class BbsController {
+public class BBSController {
 
     private final PostRepository postRepository;
+    private final BBSService bbsService;
 
     @GetMapping("/bbs")
-    public String index(Model model) {
-        List<Post> postList = postRepository.findAllByOrderByIdDesc();
-        List<PostListResponseDto> posts = postList.stream().map(PostListResponseDto::new).collect(Collectors.toList());
-        model.addAttribute("posts", posts);
+    public String index(@PageableDefault Pageable pageable, Model model) {
+        Page<Post> postList = bbsService.getPostList(pageable);
+        /*List<PostListResponseDto> posts = postList.stream().map(PostListResponseDto::new).collect(Collectors.toList());*/
+
+        model.addAttribute("postList", postList);
+
+        log.debug("총 element 수 : {}, 전체 page 수 : {}, 페이지에 표시할 element 수 : {}, 현재 페이지 index : {}, 현재 페이지의 element 수 : {}",
+                postList.getTotalElements(), postList.getTotalPages(), postList.getSize(),
+                postList.getNumber(), postList.getNumberOfElements());
+
         return "bbs/index";
     }
 
     @GetMapping("/bbs/create")
     public String postCreate() {
-        return "post-create";
+        return "bbs/post-create";
     }
 
     @GetMapping("/bbs/update/{id}")
@@ -57,17 +70,20 @@ public class BbsController {
 
     @Transactional
     @PutMapping("/bbs/update/{id}")
-    public String update(@PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) {
+    @ResponseBody
+    public Long update(@PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) {
+        System.out.println("==========enter===============");
         Post post = postRepository.findById(id).get();
         post.update(requestDto.getTitle(), requestDto.getContent());
-
-        return "redirect:/bbs";
+        System.out.println("post = " + post.toString());
+        return post.getId();
     }
 
     @Transactional
     @DeleteMapping("/bbs/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    @ResponseBody
+    public Long delete(@PathVariable Long id) {
         postRepository.deleteById(id);
-        return "redirect:/bbs";
+        return id;
     }
 }

@@ -2,8 +2,8 @@ package com.jpabook.jpashop.product.web;
 
 import com.jpabook.jpashop.account.domain.Account;
 import com.jpabook.jpashop.account.service.CurrentUser;
-import com.jpabook.jpashop.common.service.S3Uploader;
-import com.jpabook.jpashop.noti.service.NotiService;
+import com.jpabook.jpashop.notification.domain.NotificationStatus;
+import com.jpabook.jpashop.notification.service.NotificationService;
 import com.jpabook.jpashop.product.domain.Product;
 import com.jpabook.jpashop.product.domain.ProductRepository;
 import com.jpabook.jpashop.product.service.ProductService;
@@ -23,11 +23,10 @@ import java.util.Optional;
 @Controller
 public class ProductController {
 
-    private final S3Uploader s3Uploader;
     private final ProductService productService;
     private final ProductUploadFormValidator productUploadFormValidator;
     private final ProductRepository productRepository;
-    private final NotiService notiService;
+    private final NotificationService notificationService;
 
     @InitBinder("productUploadForm")
     public void initBinder(WebDataBinder webDataBinder) {
@@ -54,17 +53,9 @@ public class ProductController {
         System.out.println("file = " + file);
         System.out.println("=============================");*/
 
-        s3Uploader.upload(file, account, productUploadForm);
-
-        //productService.upload(file, account, productUploadForm);
+        productService.upload(file, account, productUploadForm);
         return "redirect:/";
     }
-
-
-
-
-
-
 
     @GetMapping("/product/detail/{id}")
     public String detailProduct(@PathVariable Long id, Model model) {
@@ -74,13 +65,25 @@ public class ProductController {
         return "/product/detail";
     }
 
-    @GetMapping("/buy/{id}")
+    @GetMapping("/buy/proudct/{id}")
     public String buyProduct(@CurrentUser Account buyer, @PathVariable Long id, Model model) {
         Optional<Product> byId = productRepository.findById(id);
         Product product = byId.get();
         Account owner = product.getAccount();
 
-        notiService.sendNoti(buyer, owner, product, "구매 요청입니다");
+        notificationService.sendNotification(buyer, owner, product, NotificationStatus.purchaseRequest, "구매 요청입니다");
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/sell/product")
+    public String buyProduct(@CurrentUser Account account,
+                             @RequestParam(value = "productId", required=false) Long productId,
+                             @RequestParam(value = "notificationId", required=false) Long notificationId,
+                             Model model) {
+
+        notificationService.handleSellNotification(notificationId);
+        productService.sell(productId);
 
         return "redirect:/";
     }

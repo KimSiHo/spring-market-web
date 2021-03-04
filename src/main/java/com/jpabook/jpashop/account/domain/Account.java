@@ -1,6 +1,6 @@
 package com.jpabook.jpashop.account.domain;
 
-import com.jpabook.jpashop.common.domain.BaseTimeEntity;
+import com.jpabook.jpashop.common.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;

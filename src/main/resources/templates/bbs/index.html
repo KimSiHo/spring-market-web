@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: head"></head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <body>
     <div th:replace="fragments :: main-nav"></div>
 
@@ -12,7 +13,7 @@
         <div class="col-md-10">
             <br />
             <br />
-            <a href="/bbs/post/save" role="button" class="btn btn-primary">글 등록</a>
+            <a href="/bbs/create" role="button" class="btn btn-primary">글 등록</a>
             <br />
             <br />
 
@@ -26,16 +27,51 @@
                     </tr>
                 </thead>
                 <tbody id="tbody">
-                    <tr th:each="post:${posts}">
+                    <tr th:each="post:${postList}">
                         <td th:text="${post.id}"> - </td>
                         <td>
                             <a href="#" th:href="@{/bbs/update/{id} (id=${post.id})}" th:text="*{post.title}"></a>
                         </td>
-                        <td th:text="${post.writer}"> - </td>
+                        <td th:text="${post.writer.nickname}"> - </td>
                         <td th:text="${post.modifiedDate}"> - </td>
                     </tr>
                 </tbody>
             </table>
+
+            <nav style="text-align: center;">
+                <ul class="pagination"
+                    th:with="start=${T(Math).floor(postList.number/10)*10 + 1},
+                             last=(${start + 9 < postList.totalPages ? start + 9 : postList.totalPages})">
+                    <li>
+                        <a th:href="@{/bbs(page=1)}" aria-label="First">
+                            <span aria-hidden="true">First</span>
+                        </a>
+                    </li>
+
+                    <li th:class="${postList.first} ? 'disabled'">
+                        <a th:href="${postList.first} ? '#' :@{/bbs(page=${postList.number})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == postList.number + 1} ? 'active'">
+                        <a th:text="${page}" th:href="@{/bbs(page=${page})}"></a>
+                    </li>
+
+                    <li th:class="${postList.last} ? 'disabled'">
+                        <a th:href="${postList.last} ? '#' : @{/bbs(page=${postList.number + 2})}" aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/bbs(page=${postList.totalPages})}" aria-label="Last">
+                            <span aria-hidden="true">Last</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
         </div>
     </div>
 

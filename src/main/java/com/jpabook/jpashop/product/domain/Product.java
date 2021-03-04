@@ -1,8 +1,8 @@
 package com.jpabook.jpashop.product.domain;
 
 import com.jpabook.jpashop.account.domain.Account;
-import com.jpabook.jpashop.common.domain.BaseTimeEntity;
-import com.jpabook.jpashop.common.domain.ProductImageFile;
+import com.jpabook.jpashop.common.BaseTimeEntity;
+import com.jpabook.jpashop.product.web.ProductKind;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,9 +22,10 @@ public class Product extends BaseTimeEntity {
     @GeneratedValue
     private Long id;
 
-    private String pio;
+    private String bio;
 
-    private String keyword;
+    @Enumerated(EnumType.STRING)
+    private ProductKind productKind;
 
     private String fileName;
 
@@ -37,5 +38,9 @@ public class Product extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "product")
     private List<ProductImageFile> productImageFile = new ArrayList<>();
+
+    public void soldOut(){
+        this.productStatus = ProductStatus.soldOut;
+    }
 
 }

@@ -1,24 +1,20 @@
 package com.jpabook.jpashop.develop_temp_not_in_project;
 
 import com.jpabook.jpashop.account.domain.AccountRepository;
-import com.jpabook.jpashop.noti.domain.NotiRepository;
-import com.jpabook.jpashop.product.domain.Product;
+import com.jpabook.jpashop.notification.domain.NotificationRepository;
 import com.jpabook.jpashop.product.domain.ProductRepository;
-import com.jpabook.jpashop.product.domain.ProductStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Component
 @Order(1)
 public class ForDevTest implements ApplicationRunner {
 
-    private final NotiRepository notiRepository;
+    private final NotificationRepository notificationRepository;
     private final AccountRepository accountRepository;
     private final ProductRepository productRepository;
 

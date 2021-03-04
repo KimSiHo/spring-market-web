@@ -46,8 +46,8 @@
                 <a class="nav-link" th:href="@{/sign-up}">가입</a>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link" th:href="@{/noti}">
-                    <i class="fa fa-bell-o" aria-hidden="true"><span class="badge badge-info" th:text="${notiCount}"> - </span></i>
+                <a class="nav-link" th:href="@{/settings/notifications}">
+                    <i class="fa fa-bell-o" aria-hidden="true"><span class="badge badge-info" th:text="${notificationsCount}"> - </span></i>
                 </a>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
@@ -83,11 +83,8 @@
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'profile'}? active" href="#" th:href="@{/settings/profile}">프로필</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'password'}? active" href="#" th:href="@{/settings/password}">패스워드</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'notifications'}? active" href="#" th:href="@{/settings/notifications}">알림</a>
-    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'tags'}? active" href="#" th:href="@{/settings/tags}">관심 주제</a>
-    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'zones'}? active" href="#" th:href="@{/settings/zones}">활동 지역</a>
     <a class="list-group-item list-group-item-action list-group-item-danger" th:classappend="${currentMenu == 'account'}? active" href="#" th:href="@{/settings/account}">계정</a>
 </div>
-
 
 <div th:fragment="main-menu (currentMenu)" class="list-group">
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'main'}? active" href="#" th:href="@{/}">홈</a>
@@ -95,7 +92,7 @@
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'new-product'}? active" href="#" th:href="@{/upload/product}">상품 등록</a>
 </div>
 
-<!-- --------------------------------------------------- 메뉴 --------------------------------------------------- -->
+<!-- --------------------------------------------------- 기타 --------------------------------------------------- -->
 
 <footer th:fragment="footer">
     <div class="row justify-content-center">
@@ -147,25 +144,25 @@
         save : function () {
             var data = {
                 title: $('#title').val(),
-                author: $('#author').val(),
-                content: $('#content').val(),
+                content: $('#content').val()
             };
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
 
             $.ajax({
                 type: 'POST',
-                url: '/bbs/api/v1/post',
+                url: '/bbs/create',
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
                 },
-                dataType: 'json',
+                //dataType: 'json',
                 contentType:'application/json; charset=utf-8',
                 data: JSON.stringify(data)
             }).done(function() {
                 alert('글이 등록되었습니다.');
                 window.location.href = '/bbs';
             }).fail(function (error) {
+                console.log(error);
                 alert(JSON.stringify(error));
             });
         },
@@ -175,15 +172,23 @@
                 content: $('#content').val()
             };
 
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
             var id = $('#id').val();
 
             $.ajax({
                 type: 'PUT',
-                url: '/bbs/api/v1/post/'+id,
-                dataType: 'json',
+                url: '/bbs/update/'+id,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
                 contentType:'application/json; charset=utf-8',
                 data: JSON.stringify(data)
             }).done(function() {
+                console.log(data);
+                console.log(data.redirect);
+
                 alert('글이 수정되었습니다.');
                 window.location.href = '/bbs';
             }).fail(function (error) {
@@ -193,9 +198,15 @@
         delete : function () {
             var id = $('#id').val();
 
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
             $.ajax({
                 type: 'DELETE',
-                url: '/bbs/api/v1/post/'+id,
+                url: '/bbs/delete/'+id,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
                 dataType: 'json',
                 contentType:'application/json; charset=utf-8'
             }).done(function() {

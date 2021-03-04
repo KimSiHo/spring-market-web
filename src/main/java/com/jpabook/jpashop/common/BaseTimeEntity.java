@@ -1,4 +1,4 @@
-package com.jpabook.jpashop.common.domain;
+package com.jpabook.jpashop.common;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
