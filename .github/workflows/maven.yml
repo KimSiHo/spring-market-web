@@ -11,8 +11,8 @@ on:
 #    branches: [ master ]
 
 env:
-  S3_BUCKET_NAME: freelec-jpashop-build
-  PROJECT_NAME: springboot-web
+  S3_BUCKET_NAME: spring-market-web--build
+  PROJECT_NAME: spring-market-web
 
 
 jobs:
@@ -48,5 +48,5 @@ jobs:
       run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
 
     - name: Code Deploy 
-      run: aws deploy create-deployment --application-name freelec-jpashop-webservice --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name springboot-webService-ec2-group --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
+      run: aws deploy create-deployment --application-name spring-market-web-codeDeploy --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name spring-market-web-ec2-group --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
   
