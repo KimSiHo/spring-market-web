@@ -14,12 +14,9 @@ env:
   S3_BUCKET_NAME: spring-market-web--build
   PROJECT_NAME: spring-market-web
 
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
