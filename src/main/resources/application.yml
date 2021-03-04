@@ -47,14 +47,16 @@ server:
 #AWS s3 업로드 경로 ( 상품 이미지 )
 cloud:
   aws:
+    region:
+      auto: true
+      static: ap-northeast-2
     s3:
       bucket: app-product-image
-    region:
-      static: ap-northeast-2
     stack:
       auto: false
     credentials:
       instanceProfile: true
+
 
 #로컬 파일 시스템 업로드 경로 ( 사용중 x )
 local:

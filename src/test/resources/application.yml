@@ -20,6 +20,19 @@ spring:
   profiles:
     active: local, test
 
+#AWS s3 업로드 경로 ( 상품 이미지 )
+cloud:
+  aws:
+    region:
+      auto: true
+      static: ap-northeast-2
+    s3:
+      bucket: app-product-image
+    stack:
+      auto: false
+    credentials:
+      instanceProfile: true
+
 
 
 logging:

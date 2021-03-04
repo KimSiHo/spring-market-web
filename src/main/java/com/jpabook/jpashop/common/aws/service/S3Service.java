@@ -1,4 +1,4 @@
-package com.jpabook.jpashop.common.aws;
+package com.jpabook.jpashop.common.aws.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;

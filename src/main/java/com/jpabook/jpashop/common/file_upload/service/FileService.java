@@ -1,7 +1,7 @@
 package com.jpabook.jpashop.common.file_upload.service;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.jpabook.jpashop.common.aws.S3Service;
+import com.jpabook.jpashop.common.aws.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -82,7 +82,7 @@ public class FileService {
         else { log.info("파일이 삭제되지 못했습니다: {}" , targetFile.getName()); }
     }
 
-    /*public byte[] bytes(String path, String id) throws IOException {
+   /* public byte[] bytes(String path, String id) throws IOException {
         return Files.readAllBytes(
                 new File(String.format(
                         "%s%s%s%s%s",
@@ -94,4 +94,5 @@ public class FileService {
     public void to(String path, String id, OutputStream out) throws IOException {
         IOUtils.copy(new ByteArrayInputStream(bytes(path, id)), out);
     }*/
+
 }

@@ -20,6 +20,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
+
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -69,6 +70,7 @@ public class DataInsert implements ApplicationRunner {
     }
 
     private void createPost(Account account) {
+
 
         IntStream.rangeClosed(1, 154).forEach(i -> {
             Post newPost = Post.builder()
