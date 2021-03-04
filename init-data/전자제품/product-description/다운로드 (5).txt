@@ -1,0 +1,3 @@
+bio> 가정용 전자레인지 입니다.
+keyword> 전자제품
+owner> kim125

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body class="bg-light">
+<div th:replace="fragments.html :: main-nav"></div>
+<div class="container">
+    <div class="row mt-5 justify-content-center">
+        <div class="col-2">
+            <div th:replace="fragments.html :: settings-menu(currentMenu='notifications')"></div>
+        </div>
+        <div class="col-8">
+            <div th:if="${message}" class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                <span th:text="${message}">메시지</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="row">
+                <h2 class="col-sm-12" >알림</h2>
+            </div>
+
+            <div class="row mt-3">
+                <div id="accordion">
+                    <div class="card" th:each="notification : ${notifications}">
+                        <div class="card-header">
+                            <a class="card-link" data-toggle="collapse" href="#" th:href="${'#collapse' + notificationStat.count }">
+                                알림입니다. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                보내는 이 : <span th:text="${notification.sender.nickname}"></span>
+                            </a>
+                        </div>
+                        <div th:id="${'collapse' + notificationStat.count}" id="#" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                <p>
+                                    보내는 이 : <span th:text="${notification.sender.nickname}"> - </span>
+                                </p>
+                                <p>
+                                    메시지 내용 : <span th:text="${notification.message}"> - </span>
+                                </p>
+                                <p>
+                                    관련 상품<br />
+                                    <img th:src="${notification.product.productImageFile[0].imageURL}"> - </img> <br />
+                                    <span th:text="${notification.product.bio}"> - </span>
+                                </p>
+                            </div>
+                            <span th:if="${notification.notificationStatus.toString()} == 'purchaseRequest'">
+                                <form th:action="@{'/sell/product'}" class="form-inline" method="get" style="display: inline">
+                                    <input type="hidden" th:name="productId" th:value="${notification.product.id}">
+                                    <input type="hidden" th:name="notificationId" th:value="${notification.id}">
+                                    <button class="btn btn-success" type="submit">판매 확정</button>
+                                </form>
+                                <form th:action="@{/reject/product}" class="form-inline" method="get" style="display: inline">
+                                    <button class="btn btn-success" type="submit">판매 거절</button>
+                                </form>
+                            </span>
+                            <span th:if="${notification.notificationStatus.toString()} == 'saleCompleted'">
+                                <form th:action="@{/#}" class="form-inline" method="get" style="display: inline">
+                                    <button class="btn btn-success" type="submit">구매 확인</button>
+                                </form>
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,3 @@
+bio> 비싼 신발입니다.
+keyword> 신발
+owner> odreamgodo
