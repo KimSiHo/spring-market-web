@@ -1,7 +1,7 @@
 #!/bin/bash
 
-REPOSITORY=/home/ec2-user/app/step2
-PROJECT_NAME=jpashop
+REPOSITORY=/home/ec2-user/spring-market-web
+PROJECT_NAME=spring-market-web
 
 echo "> Build 파일 복사"
 
@@ -9,7 +9,7 @@ cp $REPOSITORY/zip/target/*.jar $REPOSITORY/
 
 echo "> 현재 구동 중인 애플리케이션 pid 확인"
 
-CURRENT_PID=$(pgrep -f1 jpashop | grep jar | awk '{print $1}')
+CURRENT_PID=$(pgrep -f1 spring-market-web | grep jar | awk '{print $1}')
 
 echo "> 현재 구동 중인 애플리케이션 pid: $CURRENT_PID"
 
