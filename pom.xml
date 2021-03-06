@@ -148,8 +148,8 @@
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>1.8.0</version>
                 <configuration>
-                    <!--<nodeVersion>v6.4.0</nodeVersion>-->
-                    <nodeVersion>v4.6.0</nodeVersion>
+                    <nodeVersion>v6.4.0</nodeVersion>
+                    <!--<nodeVersion>v4.6.0</nodeVersion>-->
                     <workingDirectory>src/main/resources/static</workingDirectory>
                 </configuration>
                 <executions>
