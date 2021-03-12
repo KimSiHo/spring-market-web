@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.jpabook</groupId>
-    <artifactId>spring-market-web</artifactId>
+    <artifactId>jpashop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-market-web</name>
+    <name>jpashop</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -139,10 +139,10 @@
 
     <build>
         <plugins>
-           <!-- <plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>-->
+            </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
