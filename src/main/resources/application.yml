@@ -1,7 +1,7 @@
 spring:
   #DB 관련
   datasource:
-    url: jdbc:postgresql://localhost:5433/springboot
+    url: jdbc:postgresql://localhost:5432/springboot
     username: postgres
     password: ng1029
 
