@@ -4,6 +4,7 @@ import com.jpabook.jpashop.account.domain.Account;
 import com.jpabook.jpashop.account.domain.AccountRepository;
 import com.jpabook.jpashop.bbs.domain.Post;
 import com.jpabook.jpashop.bbs.domain.PostRepository;
+import com.jpabook.jpashop.bbs.domain.PostType;
 import com.jpabook.jpashop.notification.domain.Notification;
 import com.jpabook.jpashop.notification.domain.NotificationRepository;
 import com.jpabook.jpashop.notification.domain.NotificationStatus;
@@ -32,13 +33,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 @Profile("!test")
 @RequiredArgsConstructor
-@Component
+//@Component
 @Order(0)
 public class DataInsert implements ApplicationRunner {
 
@@ -71,17 +73,22 @@ public class DataInsert implements ApplicationRunner {
 
     private void createPost(Account account) {
 
+        var datetime = LocalDateTime.of(2020, 5, 24, 14, 0);
+        var instant = ZonedDateTime.of(datetime, ZoneId.systemDefault()).toInstant();
+        var clock = Clock.fixed(instant, ZoneId.systemDefault());
+
+        Instant.now(clock);
 
         IntStream.rangeClosed(1, 154).forEach(i -> {
             Post newPost = Post.builder()
                                .title("test" + i)
                                .content("content test" + i)
+                               .postType(PostType.sale)
                                .writer(account)
                                .build();
 
             postRepository.save(newPost);
         });
-
     }
 
     private void createNoti(Account sender, Account recipient, Product audio, String msg) {
@@ -98,7 +105,7 @@ public class DataInsert implements ApplicationRunner {
 
     private List<Product> createProduct() throws IOException {
         String root = "src/main/resources/init-data/";
-        String[] categories = {"가구", "신발", "옷", "전자제품"};
+        String[] categories = {"computer", "electronic", "furniture", "cloth", "shoes"};
 
         List<Product> retProducts = new ArrayList<Product>();
         for (String category : categories) {
@@ -132,7 +139,7 @@ public class DataInsert implements ApplicationRunner {
             Account owner = null;
             for (String line : lines) {
                 Integer keyIndex = line.indexOf(">");
-                String keyword = line.substring(0, keyIndex);
+                String keyword = line.substring(0, keyIndex).trim();
                 String value = StringUtils.trim(line.substring(keyIndex + 1));
 
                 switch (keyword){
@@ -141,17 +148,20 @@ public class DataInsert implements ApplicationRunner {
                         break;
                     case "keyword":
                         switch (value) {
-                            case "가구":
+                            case "furniture":
                                 productUploadForm.setProductKind(ProductKind.furniture);
                                 break;
-                            case "신발":
+                            case "shoes":
                                 productUploadForm.setProductKind(ProductKind.shoes);
                                 break;
-                            case "옷":
+                            case "cloth":
                                 productUploadForm.setProductKind(ProductKind.cloth);
                                 break;
-                            case "전자제품":
+                            case "electronic":
                                 productUploadForm.setProductKind(ProductKind.electronic);
+                                break;
+                            case "computer":
+                                productUploadForm.setProductKind(ProductKind.computer);
                                 break;
                             default:
                                 System.out.println("일치하지 않는 키워드 입니다");
@@ -160,6 +170,12 @@ public class DataInsert implements ApplicationRunner {
                         break;
                     case "owner":
                         owner = accountRepository.findByNickname(value);
+                        break;
+                    case "productTitle":
+                        productUploadForm.setProductTitle(value);
+                        break;
+                    case "price":
+                        productUploadForm.setPrice(Integer.parseInt(value));
                         break;
                     default:
                         System.out.println("not matching keyword");

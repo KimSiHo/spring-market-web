@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: head"></head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
 <body>
     <div th:replace="fragments :: main-nav"></div>
 
@@ -10,30 +10,35 @@
             <div th:replace="fragments :: main-menu(currentMenu='bbs')"></div>
         </div>
 
-        <div class="col-md-10">
-            <br />
+        <div class="col-md-8">
             <br />
             <a href="/bbs/create" role="button" class="btn btn-primary">글 등록</a>
-            <br />
-            <br />
+            <br /><br />
 
-            <table class="table table-horizontal table-bordered">
+            <table class="table table-horizontal table-hover">
                 <thead class="thead-strong">
                     <tr>
-                        <th>게시글번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>최종수정일</th>
+                        <th style="width: 10%">게시글번호</th>
+                        <th style="width: 50%">제목</th>
+                        <th style="width: 10%">작성자</th>
+                        <th style="width: 20%">작성일</th>
+                        <th style="width: 10%">조회수</th>
                     </tr>
                 </thead>
                 <tbody id="tbody">
-                    <tr th:each="post:${postList}">
+                    <tr th:each="post:${postList}" style="height: 40px; overflow:auto;">
                         <td th:text="${post.id}"> - </td>
                         <td>
                             <a href="#" th:href="@{/bbs/update/{id} (id=${post.id})}" th:text="*{post.title}"></a>
                         </td>
                         <td th:text="${post.writer.nickname}"> - </td>
-                        <td th:text="${post.modifiedDate}"> - </td>
+                        <td th:with="postDate=${post.createdDate.toLocalDate()}">
+                            <span th:if="${postDate.isEqual(#temporals.createToday())}"
+                                  th:text="${#temporals.format(post.createdDate, 'HH:mm')}"></span>
+                            <span th:unless="${postDate.isEqual(#temporals.createToday())}"
+                                  th:text="${#temporals.format(post.createdDate, 'yyyy.MM.dd')}"></span>
+                        </td>
+                        <td> - </td>
                     </tr>
                 </tbody>
             </table>

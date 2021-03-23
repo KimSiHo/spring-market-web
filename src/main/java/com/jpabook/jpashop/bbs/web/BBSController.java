@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +38,7 @@ public class BBSController {
         Page<Post> postList = bbsService.getPostList(pageable);
         /*List<PostListResponseDto> posts = postList.stream().map(PostListResponseDto::new).collect(Collectors.toList());*/
 
+        model.addAttribute("today", LocalDate.now());
         model.addAttribute("postList", postList);
 
         log.debug("총 element 수 : {}, 전체 page 수 : {}, 페이지에 표시할 element 수 : {}, 현재 페이지 index : {}, 현재 페이지의 element 수 : {}",

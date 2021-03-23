@@ -30,6 +30,8 @@ public class ProductService {
         Product product = Product.builder()
                             .bio(productUploadForm.getBio())
                             .account(account)
+                            .price(productUploadForm.getPrice())
+                            .productTitle(productUploadForm.getProductTitle())
                             .fileName(file.getOriginalFilename())
                             .productKind(productUploadForm.getProductKind())
                             .productStatus(ProductStatus.onSale)

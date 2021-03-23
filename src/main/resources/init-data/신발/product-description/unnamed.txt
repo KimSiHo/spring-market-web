@@ -1,3 +1,0 @@
-bio> 아디다스 신발입니다.
-keyword> 신발
-owner> kim125y

@@ -28,6 +28,9 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "writer_id")
     private Account writer;
 
+    @Enumerated(value = EnumType.STRING)
+    private PostType postType;
+
     public void update(String title, String content) {
         this.title = title;
         this.content = content;

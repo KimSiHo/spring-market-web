@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -36,7 +37,7 @@ public class ProductController {
     @GetMapping("/upload/product")
     public String uploadProduct(Model model) {
         model.addAttribute(new ProductUploadForm());
-        return "/product/upload-product";
+        return "product/upload-product";
     }
 
     @PostMapping("/upload/product")
@@ -44,7 +45,7 @@ public class ProductController {
                                 @CurrentUser Account account, @RequestParam("productImageFile") MultipartFile file) throws IOException {
 
         if(errors.hasErrors()){
-            return "/product/upload-product";
+            return "product/upload-product";
         }
 
         /*System.out.println("=============================");
@@ -57,12 +58,23 @@ public class ProductController {
         return "redirect:/";
     }
 
-    @GetMapping("/product/detail/{id}")
-    public String detailProduct(@PathVariable Long id, Model model) {
+    @GetMapping("/product/list/{productKind}")
+    public String detailElectronicProduct(@PathVariable String productKind, Model model) {
+        ProductKind enumProductKind = ProductKind.valueOf(productKind);
+        List<Product> allByProductKind = productRepository.findAllByProductKind(enumProductKind);
+
+        model.addAttribute("productList",allByProductKind);
+        model.addAttribute("productKind", productKind);
+        return "product/product-list";
+    }
+
+    @GetMapping("/product/detail/{productKind}/{id}")
+    public String detailElectronicProduct(@PathVariable Long id, @PathVariable String productKind, Model model) {
         Optional<Product> byId = productRepository.findById(id);
         Product product = byId.get();
         model.addAttribute(product);
-        return "/product/detail";
+        model.addAttribute("productKind", productKind);
+        return "product/product-detail";
     }
 
     @GetMapping("/buy/proudct/{id}")

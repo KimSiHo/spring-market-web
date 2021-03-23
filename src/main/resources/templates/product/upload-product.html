@@ -14,11 +14,24 @@
             <br />
             <form action="#"
                   th:action="@{/upload/product}" th:object="${productUploadForm}" method="post" enctype="multipart/form-data" novalidate>
+
+                <div class="form-group">
+                    <label for="productTitle">게시글 제목</label>
+                    <input id="productTitle" type="text" th:field="*{productTitle}" class="form-control"
+                           placeholder="게시글 제목을 작성해주세요" required>
+                    <small id="productTitleHelp" class="form-text text-muted">
+                        길지 않게 30자 이내로 입력하세요.
+                    </small>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('productTitle')}" th:errors="*{productTitle}">
+                        8자 이상 30자 이하로 작성해 주세요.
+                    </small>
+                </div>
+
                 <div class="form-group">
                     <label for="bio">상품 소개</label>
                     <input id="bio" type="text" th:field="*{bio}" class="form-control"
                            placeholder="상품 소개를 부탁합니다." required>
-                    <small id="pioHelp" class="form-text text-muted">
+                    <small id="bioHelp" class="form-text text-muted">
                         길지 않게 50자 이내로 입력하세요.
                     </small>
                     <small class="form-text text-danger" th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}">
@@ -27,14 +40,27 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="productKind">업로드 상품 종류 선택</label>
+                    <label for="productKind">상품 종류 선택</label>
                     <select id="productKind" th:field="*{productKind}" class="form-control"
                             placeholder="상품 종류를 선택해주세요." required>
+                        <option th:value="${T(com.jpabook.jpashop.product.web.ProductKind).computer}">컴퓨터</option>
+                        <option th:value="${T(com.jpabook.jpashop.product.web.ProductKind).electronic}">디지털/가전</option>
                         <option th:value="${T(com.jpabook.jpashop.product.web.ProductKind).furniture}">가구</option>
-                        <option th:value="${T(com.jpabook.jpashop.product.web.ProductKind).shoes}">신발</option>
                         <option th:value="${T(com.jpabook.jpashop.product.web.ProductKind).cloth}">옷</option>
-                        <option th:value="${T(com.jpabook.jpashop.product.web.ProductKind).electronic}">전자제품</option>
+                        <option th:value="${T(com.jpabook.jpashop.product.web.ProductKind).shoes}">신발</option>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">상품 가격</label>
+                    <input id="price" type="text" th:field="*{price}" class="form-control"
+                           placeholder="상품 가격을 입력해 주세요." required>
+                    <small id="priceHelp" class="form-text text-muted">
+
+                    </small>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">
+                        값을 입력해 주세요.
+                    </small>
                 </div>
 
                 <div class="form-group">
@@ -62,5 +88,4 @@
                 })
             </script>-->
 </body>
-
 </html>

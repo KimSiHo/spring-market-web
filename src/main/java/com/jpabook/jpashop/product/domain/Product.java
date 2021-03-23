@@ -24,6 +24,11 @@ public class Product extends BaseTimeEntity {
 
     private String bio;
 
+    private int price;
+
+    //상품 관련 게시판으로 refactor 필요
+    private String productTitle;
+
     @Enumerated(EnumType.STRING)
     private ProductKind productKind;
 

@@ -9,22 +9,81 @@
         스터디올레 가입을 완료하려면 <a href="#" th:href="@{/check-email}" class="alert-link">계정 인증 이메일을 확인</a>하세요.
     </div>
 
-    <br /><br />
     <div class="row">
         <div class="col-2">
             <div th:replace="fragments :: main-menu(currentMenu='main')"></div>
         </div>
+        <div class="col-1"></div>
+        <div class="col-6">
+            <p style="font-size: 20px">★ 컴퓨터
+                <span class="text-black-50 pull-right" style="font-size: 15px"><a th:href="@{'/product/list/computer'}">더보기 ></a></span></p>
+            <hr style="border: 1px solid"/>
 
-
-        <div class="col-10">
-            <div class="card-columns">
-                <div class="card bg-light" style="width: 500px" th:each="product:${products}">
-                    <div class="card-header">중고 상품</div>
-                    <img class="card-img-top" th:src="${product.productImageFile[0].imageURL}" />
-                    <div class="card-body text-center">
-                        <p class="card-text" th:text="${product.bio}">Some text inside the first card</p>
+            <div class="card-columns" >
+                <div th:each="computer : ${computers}">
+                    <div class="card bg-light" style="width: 50%" >
+                        <img class="card-img-top" th:src="${computer.productImageFile[0].imageURL}" src="https://via.placeholder.com/30" />
+                        <div class="card-body text-center">
+                            <p class="card-text" th:text="${computer.productTitle}">Some text inside the first card</p>
+                            <p class="card-text" th:text="${#temporals.format(computer.createdDate, 'yyyy.MM.dd')}">Some text inside the first card</p>
+                            <a th:href="@{'/product/detail/computer/' + ${computer.id}}" class="stretched-link"></a>
+                            <!--<a th:href="@{'/product/detail/' + ${computer.id}}" class="btn btn-primary stretched-link">상품 상세 보기</a>-->
+                        </div>
                     </div>
-                    <div class="card-footer"><a th:href="'product/detail/' + ${product.id}">상품 상세보기</a></div>
+                </div>
+            </div>
+
+            <p style="font-size: 20px">★ 디지털 / 가전
+                <span class="text-black-50 pull-right" style="font-size: 15px"><a th:href="@{'/product/list/electronic'}">더보기 ></a></span></p>
+            <hr style="border: 1px solid"/>
+
+            <div class="card-columns" >
+                <div th:each="electronic : ${electronics}">
+                    <div class="card bg-light" style="width: 50%" >
+                        <img class="card-img-top" th:src="${electronic.productImageFile[0].imageURL}" src="https://via.placeholder.com/30" />
+                        <div class="card-body text-center">
+                            <p class="card-text" th:text="${electronic.productTitle}">Some text inside the first card</p>
+                            <p class="card-text" th:text="${#temporals.format(electronic.createdDate, 'yyyy.MM.dd')}">Some text inside the first card</p>
+                             <a th:href="@{'/product/detail/electronic/' + ${electronic.id}}" class="stretched-link"></a>
+                             <!--<a th:href="@{'/product/detail/' + ${computer.id}}" class="btn btn-primary stretched-link">상품 상세 보기</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="font-size: 20px">★ 옷
+                <span class="text-black-50 pull-right" style="font-size: 15px"><a th:href="@{'/product/list/cloth'}">더보기 ></a></span></p>
+            <hr style="border: 1px solid"/>
+
+            <div class="card-columns" >
+                <div th:each="cloth : ${cloths}">
+                    <div class="card bg-light" style="width: 50%" >
+                        <div class="card-body text-center">
+                        <img class="card-img-top" th:src="${cloth.productImageFile[0].imageURL}" src="https://via.placeholder.com/30" />
+                            <p class="card-text" th:text="${cloth.productTitle}">Some text inside the first card</p>
+                            <p class="card-text" th:text="${#temporals.format(cloth.createdDate, 'yyyy.MM.dd')}">Some text inside the first card</p>
+                            <a th:href="@{'/product/detail/cloth/' + ${cloth.id}}" class="stretched-link"></a>
+                            <!--<a th:href="@{'/product/cloth/' + ${cloth.id}}" class="btn btn-primary stretched-link">상품 상세 보기</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="font-size: 20px">★ 신발
+                <span class="text-black-50 pull-right" style="font-size: 15px"><a th:href="@{'/product/list/shoes'}">더보기 ></a></span></p>
+            <hr style="border: 1px solid"/>
+
+            <div class="card-columns" >
+                <div th:each="shoe : ${shoes}">
+                    <div class="card bg-light" style="width: 50%" >
+                        <div class="card-body text-center">
+                        <img class="card-img-top" th:src="${shoe.productImageFile[0].imageURL}" src="https://via.placeholder.com/30" />
+                            <p class="card-text" th:text="${shoe.productTitle}">Some text inside the first card</p>
+                            <p class="card-text" th:text="${#temporals.format(shoe.createdDate, 'yyyy.MM.dd')}">Some text inside the first card</p>
+                            <a th:href="@{'/product/detail/shoes/' + ${shoe.id}}" class="stretched-link"></a>
+                            <!--<a th:href="@{'/product/cloth/' + ${cloth.id}}" class="btn btn-primary stretched-link">상품 상세 보기</a>-->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

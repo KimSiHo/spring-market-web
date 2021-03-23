@@ -6,6 +6,7 @@ import com.jpabook.jpashop.notification.domain.NotificationRepository;
 import com.jpabook.jpashop.product.domain.Product;
 import com.jpabook.jpashop.product.domain.ProductRepository;
 import com.jpabook.jpashop.product.domain.ProductStatus;
+import com.jpabook.jpashop.product.web.ProductKind;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,14 @@ public class MainController {
 
     @GetMapping("/")
     public String home(@CurrentUser Account account, Model model) {
-        List<Product> products = productRepository.findProductByProductStatus(ProductStatus.onSale);
+        System.out.println("=========================");
+
+        //메인 페이지에 보여줄 8개의 상품들 조회
+        List<Product> computers = productRepository.findTop8ByProductStatusAndProductKind(ProductStatus.onSale, ProductKind.computer);
+        List<Product> electronics = productRepository.findTop8ByProductStatusAndProductKind(ProductStatus.onSale, ProductKind.electronic);
+        List<Product> cloths = productRepository.findTop8ByProductStatusAndProductKind(ProductStatus.onSale, ProductKind.cloth);
+        List<Product> shoes = productRepository.findTop8ByProductStatusAndProductKind(ProductStatus.onSale, ProductKind.shoes);
+
         if (account != null) {
             model.addAttribute(account);
 
@@ -33,7 +41,11 @@ public class MainController {
             model.addAttribute("notificationsCount", notifationsCount);
         }
 
-        model.addAttribute("products", products);
+        model.addAttribute("computers", computers);
+        model.addAttribute("electronics", electronics);
+        model.addAttribute("cloths", cloths);
+        model.addAttribute("shoes", shoes);
+
         return "index";
     }
 

@@ -12,11 +12,12 @@ spring:
   #JPA 설정
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         #show_sql: true
         format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   #프로필 관련
   profiles:
