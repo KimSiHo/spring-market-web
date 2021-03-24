@@ -1,4 +1,4 @@
-package com.jpabook.jpashop.common.file_upload.service;
+package com.jpabook.jpashop.common.file.service;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.jpabook.jpashop.common.aws.service.S3Service;

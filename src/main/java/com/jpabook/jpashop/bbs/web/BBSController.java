@@ -1,11 +1,10 @@
 package com.jpabook.jpashop.bbs.web;
 
 import com.jpabook.jpashop.account.domain.Account;
-import com.jpabook.jpashop.account.service.CurrentUser;
+import com.jpabook.jpashop.account.web.CurrentUser;
 import com.jpabook.jpashop.bbs.domain.Post;
 import com.jpabook.jpashop.bbs.domain.PostRepository;
 import com.jpabook.jpashop.bbs.service.BBSService;
-import com.jpabook.jpashop.bbs.web.dto.PostListResponseDto;
 import com.jpabook.jpashop.bbs.web.dto.PostResponseDto;
 import com.jpabook.jpashop.bbs.web.dto.PostSaveRequestDto;
 import com.jpabook.jpashop.bbs.web.dto.PostUpdateRequestDto;
@@ -20,10 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Controller

@@ -1,8 +1,7 @@
-package com.jpabook.jpashop.common.file_upload.service;
+package com.jpabook.jpashop.common.file.service;
 
-import com.amazonaws.services.s3.transfer.model.UploadResult;
-import com.jpabook.jpashop.common.file_upload.dto.LocalUploadComponent;
-import com.jpabook.jpashop.common.file_upload.dto.UploadInfo;
+import com.jpabook.jpashop.common.file.dto.LocalUploadComponent;
+import com.jpabook.jpashop.common.file.dto.UploadInfo;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -11,11 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

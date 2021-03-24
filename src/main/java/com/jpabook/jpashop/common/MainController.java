@@ -1,6 +1,6 @@
 package com.jpabook.jpashop.common;
 
-import com.jpabook.jpashop.account.service.CurrentUser;
+import com.jpabook.jpashop.account.web.CurrentUser;
 import com.jpabook.jpashop.account.domain.Account;
 import com.jpabook.jpashop.notification.domain.NotificationRepository;
 import com.jpabook.jpashop.product.domain.Product;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;

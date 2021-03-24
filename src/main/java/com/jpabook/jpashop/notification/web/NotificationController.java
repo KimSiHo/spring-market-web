@@ -1,7 +1,7 @@
 package com.jpabook.jpashop.notification.web;
 
 import com.jpabook.jpashop.account.domain.Account;
-import com.jpabook.jpashop.account.service.CurrentUser;
+import com.jpabook.jpashop.account.web.CurrentUser;
 import com.jpabook.jpashop.notification.domain.Notification;
 import com.jpabook.jpashop.notification.domain.NotificationRepository;
 import lombok.RequiredArgsConstructor;

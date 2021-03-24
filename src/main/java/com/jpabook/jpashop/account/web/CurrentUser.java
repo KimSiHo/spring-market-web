@@ -1,4 +1,4 @@
-package com.jpabook.jpashop.account.service;
+package com.jpabook.jpashop.account.web;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

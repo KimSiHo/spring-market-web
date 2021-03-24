@@ -1,4 +1,4 @@
-package com.jpabook.jpashop.common.file_upload.dto;
+package com.jpabook.jpashop.common.file.dto;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

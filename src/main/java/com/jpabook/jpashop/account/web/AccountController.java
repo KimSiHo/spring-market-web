@@ -2,7 +2,6 @@ package com.jpabook.jpashop.account.web;
 
 import com.jpabook.jpashop.account.domain.AccountRepository;
 import com.jpabook.jpashop.account.service.AccountService;
-import com.jpabook.jpashop.account.service.CurrentUser;
 import com.jpabook.jpashop.account.domain.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

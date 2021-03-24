@@ -1,7 +1,7 @@
 package com.jpabook.jpashop.product.web;
 
 import com.jpabook.jpashop.account.domain.Account;
-import com.jpabook.jpashop.account.service.CurrentUser;
+import com.jpabook.jpashop.account.web.CurrentUser;
 import com.jpabook.jpashop.notification.domain.NotificationStatus;
 import com.jpabook.jpashop.notification.service.NotificationService;
 import com.jpabook.jpashop.product.domain.Product;

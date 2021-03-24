@@ -1,9 +1,8 @@
 package com.jpabook.jpashop.product.service;
 
 import com.jpabook.jpashop.account.domain.Account;
-import com.jpabook.jpashop.common.file_upload.service.FileService;
+import com.jpabook.jpashop.common.file.service.FileService;
 import com.jpabook.jpashop.product.domain.*;
-import com.jpabook.jpashop.common.file_upload.service.FileService;
 import com.jpabook.jpashop.product.web.ProductKind;
 import com.jpabook.jpashop.product.web.ProductUploadForm;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Optional;
 
 @Transactional
 @RequiredArgsConstructor

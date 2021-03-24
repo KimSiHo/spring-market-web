@@ -1,9 +1,8 @@
 package com.jpabook.jpashop.settings.web;
 
 import com.jpabook.jpashop.account.service.AccountService;
-import com.jpabook.jpashop.account.service.CurrentUser;
+import com.jpabook.jpashop.account.web.CurrentUser;
 import com.jpabook.jpashop.account.domain.Account;
-import com.jpabook.jpashop.settings.web.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +10,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
