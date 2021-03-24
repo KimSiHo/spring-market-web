@@ -110,7 +110,8 @@ public class DataInsert implements ApplicationRunner {
         List<Product> retProducts = new ArrayList<Product>();
         for (String category : categories) {
             String strCategoryDirectory = root + category;
-            String strProductDescDirectory = strCategoryDirectory + "\\product-description";
+            /*String strProductDescDirectory = strCategoryDirectory + "\\product-description";*/
+            String strProductDescDirectory = strCategoryDirectory + "/product-description";
 
             File categoryDirectory = new File(strCategoryDirectory);
             File productDescDirectory = new File(strProductDescDirectory);
@@ -196,7 +197,8 @@ public class DataInsert implements ApplicationRunner {
         String extension = FilenameUtils.getExtension(productImgfile.getName());
 
         String strPaentDir = productImgfile.getParent();
-        String strResizeDir = strPaentDir + "\\resized\\";
+        /*String strResizeDir = strPaentDir + "\\resized\\";*/
+        String strResizeDir = strPaentDir + "/resized/";
         String strDestFile = strResizeDir + productImgfile.getName();
         File destFile = new File(strDestFile);
         FileUtils.forceMkdirParent(destFile);
