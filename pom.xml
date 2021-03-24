@@ -11,7 +11,7 @@
     <groupId>com.jpabook</groupId>
     <artifactId>jpashop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>jpashop</name>
+    <name>anabada-shop</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
