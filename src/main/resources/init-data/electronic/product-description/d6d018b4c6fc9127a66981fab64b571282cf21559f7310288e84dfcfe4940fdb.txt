@@ -1,0 +1,5 @@
+bio >가전 전자제품입니다.
+productTitle >전자제품
+price >60000
+keyword >electronic
+owner >kim125

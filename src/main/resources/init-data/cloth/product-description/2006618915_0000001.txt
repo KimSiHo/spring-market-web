@@ -1,0 +1,5 @@
+bio >네이비 가죽 점퍼입니다.
+productTitle >가죽 점퍼
+price >80000
+keyword >cloth
+owner> kim9810

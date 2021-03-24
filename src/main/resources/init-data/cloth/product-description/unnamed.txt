@@ -1,0 +1,5 @@
+bio >회색 코트입니다.
+productTitle >회색 코트
+price >80000
+keyword >cloth
+owner> kim9810

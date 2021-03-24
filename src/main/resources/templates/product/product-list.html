@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+    <div th:replace="fragments :: main-nav"></div>
+
+    <div class="row">
+        <div class="col-2">
+            <div th:replace="fragments :: main-menu(currentMenu=${productKind})"></div>
+        </div>
+
+        <div class="col-md-5">
+
+            <table class="table table-horizontal table-hover">
+                <thead class="thead-strong">
+                <tr>
+                    <th style="width: 10%"></th>
+                    <th style="width: 50%">제목</th>
+                    <th style="width: 10%">작성자</th>
+                    <th style="width: 20%">작성일</th>
+                    <th style="width: 10%">조회</th>
+                </tr>
+                </thead>
+
+                <tbody id="tbody">
+                <tr th:each="product : ${productList}" style="height: 40px; overflow:auto;">
+                    <td th:text="${product.id}"> - </td>
+                    <td>
+                        <a href="#" th:href="@{'/product/detail/' + ${productKind} +'/' + ${product.id} }" th:text="${product.productTitle}"></a>
+                    </td>
+                    <td th:text="${product.account.nickname}"> - </td>
+                    <td th:with="productDate=${product.createdDate.toLocalDate()}">
+                            <span th:if="${productDate.isEqual(#temporals.createToday())}"
+                                  th:text="${#temporals.format(product.createdDate, 'HH:mm')}"></span>
+                        <span th:unless="${productDate.isEqual(#temporals.createToday())}"
+                              th:text="${#temporals.format(product.createdDate, 'yyyy.MM.dd')}"></span>
+                    </td>
+                    <td> - </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <nav style="text-align: center;">
+                <ul class="pagination"
+                    th:with="start=${T(Math).floor(productList.number/10)*10 + 1},
+                             last=(${start + 9 < productList.totalPages ? start + 9 : productList.totalPages})">
+                    <li>
+                        <a th:href="@{'/product/list/' +${productKind}(page=1)}" aria-label="First">
+                            <span aria-hidden="true">First</span>
+                        </a>
+                    </li>
+
+                    <li th:class="${productList.first} ? 'disabled'">
+                        <a th:href="${productList.first} ? '#' : @{'/product/list/' + ${productKind}(page=${productList.number})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == productList.number + 1} ? 'active'">
+                        <a th:text="${page}" th:href="@{'/product/list/' + ${productKind}(page=${page})}"></a>
+                    </li>
+
+                    <li th:class="${productList.last} ? 'disabled'">
+                        <a th:href="${productList.last} ? '#' : @{'/product/list/' + ${productKind}(page=${productList.number + 2})}" aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{'/product/list/' +${productKind}(page=${productList.totalPages})}" aria-label="Last">
+                            <span aria-hidden="true">Last</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</body>
+</html>

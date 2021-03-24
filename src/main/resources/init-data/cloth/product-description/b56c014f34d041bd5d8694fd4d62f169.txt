@@ -1,0 +1,5 @@
+bio >빨간색 니트입니다.
+productTitle >빨간 니트
+price >80000
+keyword >cloth
+owner> kim9810

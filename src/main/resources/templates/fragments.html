@@ -8,7 +8,7 @@
     <title>중고 거래 장터</title>
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="custom/css/custom.css">
+    <link rel="stylesheet" href="/custom/css/custom.css">
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!--<script src="/node_modules/jdenticon/dist/jdenticon.min.js"></script>-->
@@ -32,8 +32,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <form th:action="@{/search/study}" class="form-inline" method="get">
-                    <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="중고상품 찾기"/>
+                <form th:action="@{/search/product}" class="form-inline" method="get">
+                    <div class="form-group">
+                        <select class="form-control mr-sm-2" id="productKind" name="productKind">
+                            <option value="computer" selected>컴퓨터</option>
+                            <option value="electronic">디지털 / 가전</option>
+                            <option value="cloth">옷</option>
+                            <option value="shoes">신발</option>
+                        </select>
+                    </div>
+                    <input class="form-control mr-sm-2" type="search" name="keyword" placeholder="중고상품 찾기"/>
                     <button class="btn btn-success" type="submit">검색</button>
                 </form>
             </li>

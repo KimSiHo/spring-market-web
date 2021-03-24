@@ -1,0 +1,5 @@
+bio >스트라이프 사이즈 티셔츠입니다.
+productTitle >스트라이프 티셔츠
+price >80000
+keyword >cloth
+owner> kim9810

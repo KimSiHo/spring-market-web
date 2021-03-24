@@ -10,9 +10,8 @@
         </div>
 
         <div class="col-md-8">
-            <br />
-            <br />
-            <form action="#"
+
+            <form class="border border-secondary p-3" action="#"
                   th:action="@{/upload/product}" th:object="${productUploadForm}" method="post" enctype="multipart/form-data" novalidate>
 
                 <div class="form-group">
@@ -29,8 +28,8 @@
 
                 <div class="form-group">
                     <label for="bio">상품 소개</label>
-                    <input id="bio" type="text" th:field="*{bio}" class="form-control"
-                           placeholder="상품 소개를 부탁합니다." required>
+                    <textarea class="form-control" id="bio" placeholder="상품 소개를 부탁합니다." rows="5"
+                              th:field="*{bio}" required></textarea>
                     <small id="bioHelp" class="form-text text-muted">
                         길지 않게 50자 이내로 입력하세요.
                     </small>

@@ -8,6 +8,10 @@ import com.jpabook.jpashop.product.domain.Product;
 import com.jpabook.jpashop.product.domain.ProductRepository;
 import com.jpabook.jpashop.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,9 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class ProductController {
@@ -37,7 +41,7 @@ public class ProductController {
     @GetMapping("/upload/product")
     public String uploadProduct(Model model) {
         model.addAttribute(new ProductUploadForm());
-        return "product/upload-product";
+        return "product/product-upload";
     }
 
     @PostMapping("/upload/product")
@@ -45,7 +49,7 @@ public class ProductController {
                                 @CurrentUser Account account, @RequestParam("productImageFile") MultipartFile file) throws IOException {
 
         if(errors.hasErrors()){
-            return "product/upload-product";
+            return "product/product-upload";
         }
 
         /*System.out.println("=============================");
@@ -58,12 +62,26 @@ public class ProductController {
         return "redirect:/";
     }
 
-    @GetMapping("/product/list/{productKind}")
-    public String detailElectronicProduct(@PathVariable String productKind, Model model) {
-        ProductKind enumProductKind = ProductKind.valueOf(productKind);
-        List<Product> allByProductKind = productRepository.findAllByProductKind(enumProductKind);
+    @GetMapping("/search/product")
+    public String searchProduct(@RequestParam(name = "keyword") String keyword,
+                                @RequestParam(name = "productKind") String productKind,
+                                @PageableDefault Pageable pageable, Model model) {
+        log.debug( "검색 KEYWORD : {}, 검색 상품 종류 : {}", keyword, productKind);
 
-        model.addAttribute("productList",allByProductKind);
+        Page<Product> productSearchList = productService.findProductSearchList(pageable, keyword, productKind);
+
+        model.addAttribute("productList", productSearchList);
+        model.addAttribute("productKind", productKind);
+
+        return "product/product-list";
+    }
+
+    @GetMapping("/product/list/{productKind}")
+    public String productList(@PageableDefault Pageable pageable, @PathVariable String productKind, Model model) {
+        ProductKind enumProductKind = ProductKind.valueOf(productKind);
+        Page<Product> top10ByByProductKind = productService.findTop10ByProductKind(pageable, enumProductKind);
+
+        model.addAttribute("productList", top10ByByProductKind);
         model.addAttribute("productKind", productKind);
         return "product/product-list";
     }

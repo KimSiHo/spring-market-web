@@ -1,0 +1,5 @@
+bio >신형 컴퓨터입니다.
+productTitle >애플 컴퓨터
+price >800000
+keyword >computer
+owner> kim125y

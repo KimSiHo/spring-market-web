@@ -1,0 +1,5 @@
+bio >예쁜 신발입니다.
+productTitle >나이키 신발
+price >50000
+keyword >shoes
+owner >odreamgodo

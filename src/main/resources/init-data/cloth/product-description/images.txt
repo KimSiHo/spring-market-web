@@ -1,0 +1,5 @@
+bio >왼쪽은 신상 오른쪽은 헌 제품입니다.
+productTitle >자켓
+price >80000
+keyword >cloth
+owner> kim9810

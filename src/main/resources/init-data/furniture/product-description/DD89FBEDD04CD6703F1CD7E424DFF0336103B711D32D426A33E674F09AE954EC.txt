@@ -1,0 +1,5 @@
+bio >목재 가구입니다.
+productTitle >목재 가구
+price >70000
+keyword >furniture
+owner >kim9810
