@@ -9,7 +9,7 @@ cp $REPOSITORY/zip/target/*.jar $REPOSITORY/
 
 echo "> 현재 구동 중인 애플리케이션 pid 확인"
 
-CURRENT_PID=$(pgrep -fl spring-market-web | grep jar | awk '{print $1}')
+CURRENT_PID=$(pgrep -fl jpashop | grep jar | awk '{print $1}')
 
 echo "> 현재 구동 중인 애플리케이션 pid: $CURRENT_PID"
 
@@ -29,7 +29,7 @@ echo "> JAR Name: $JAR_NAME"
 
 echo "> $JAR_NAME에 실행권한 추가"
 
-chmod +x $JAR_NAME
+chmod +x $REPOSITORY/$JAR_NAME
 
 echo "> $JAR_NAME 실행"
 
