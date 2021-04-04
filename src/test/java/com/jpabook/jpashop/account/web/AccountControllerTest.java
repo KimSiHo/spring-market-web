@@ -3,6 +3,8 @@ package com.jpabook.jpashop.account.web;
 import com.jpabook.jpashop.account.domain.Account;
 import com.jpabook.jpashop.account.domain.AccountRepository;
 import com.jpabook.jpashop.account.service.AccountService;
+import com.jpabook.jpashop.common.mail.EmailMessage;
+import com.jpabook.jpashop.common.mail.EmailService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +42,7 @@ class AccountControllerTest {
     private AccountService accountService;
 
     @MockBean
-    JavaMailSender javaMailSender;
-
+    EmailService emailService;
 
     @Test
     void test(){
@@ -129,6 +130,6 @@ class AccountControllerTest {
         assertNotNull(account);
         assertNotEquals(account.getPassword(), "12345678");
         assertNotNull(account.getEmailCheckToken());
-        then(javaMailSender).should().send(any(SimpleMailMessage.class));
+        then(emailService).should().sendEmail(any(EmailMessage.class));
     }
 }
