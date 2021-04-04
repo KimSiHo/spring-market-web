@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:display="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments :: head"></head>
 <body class="bg-light">
 
@@ -19,9 +19,9 @@
                 <span class="text-black-50 pull-right" style="font-size: 15px"><a th:href="@{'/product/list/computer'}">수정 더보기 ></a></span></p>
             <hr style="border: 1px solid"/>
 
-            <div class="card-columns" >
+            <div class="card-columns d-flex flex-wrap">
                 <div th:each="computer : ${computers}">
-                    <div class="card bg-light" style="width: 50%" >
+                    <div class="card bg-light" style="width: 13rem" >
                         <img class="card-img-top" th:src="${computer.productImageFile[0].imageURL}" src="https://via.placeholder.com/30" />
                         <div class="card-body text-center">
                             <p class="card-text" th:text="${computer.productTitle}">Some text inside the first card</p>
@@ -37,9 +37,9 @@
                 <span class="text-black-50 pull-right" style="font-size: 15px"><a th:href="@{'/product/list/electronic'}">더보기 ></a></span></p>
             <hr style="border: 1px solid"/>
 
-            <div class="card-columns" >
+            <div class="card-columns d-flex flex-wrap" >
                 <div th:each="electronic : ${electronics}">
-                    <div class="card bg-light" style="width: 50%" >
+                    <div class="card bg-light" style="width: 13rem" >
                         <img class="card-img-top" th:src="${electronic.productImageFile[0].imageURL}" src="https://via.placeholder.com/30" />
                         <div class="card-body text-center">
                             <p class="card-text" th:text="${electronic.productTitle}">Some text inside the first card</p>
@@ -55,9 +55,9 @@
                 <span class="text-black-50 pull-right" style="font-size: 15px"><a th:href="@{'/product/list/cloth'}">더보기 ></a></span></p>
             <hr style="border: 1px solid"/>
 
-            <div class="card-columns" >
+            <div class="card-columns d-flex flex-wrap" >
                 <div th:each="cloth : ${cloths}">
-                    <div class="card bg-light" style="width: 50%" >
+                    <div class="card bg-light" style="width: 13rem" >
                         <div class="card-body text-center">
                         <img class="card-img-top" th:src="${cloth.productImageFile[0].imageURL}" src="https://via.placeholder.com/30" />
                             <p class="card-text" th:text="${cloth.productTitle}">Some text inside the first card</p>
@@ -73,9 +73,9 @@
                 <span class="text-black-50 pull-right" style="font-size: 15px"><a th:href="@{'/product/list/shoes'}">더보기 ></a></span></p>
             <hr style="border: 1px solid"/>
 
-            <div class="card-columns" >
+            <div class="card-columns d-flex flex-wrap" >
                 <div th:each="shoe : ${shoes}">
-                    <div class="card bg-light" style="width: 50%" >
+                    <div class="card bg-light" style="width: 13rem" >
                         <div class="card-body text-center">
                         <img class="card-img-top" th:src="${shoe.productImageFile[0].imageURL}" src="https://via.placeholder.com/30" />
                             <p class="card-text" th:text="${shoe.productTitle}">Some text inside the first card</p>

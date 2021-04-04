@@ -33,6 +33,7 @@ public class BBSController {
         Page<Post> postList = bbsService.getPostList(pageable);
         /*List<PostListResponseDto> posts = postList.stream().map(PostListResponseDto::new).collect(Collectors.toList());*/
 
+        model.addAttribute("size", pageable.getPageSize());
         model.addAttribute("today", LocalDate.now());
         model.addAttribute("postList", postList);
 

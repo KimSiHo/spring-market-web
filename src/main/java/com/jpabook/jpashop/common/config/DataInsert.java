@@ -40,7 +40,7 @@ import java.util.stream.IntStream;
 
 @Profile("!test")
 @RequiredArgsConstructor
-@Component
+//@Component
 @Order(0)
 public class DataInsert implements ApplicationRunner {
 

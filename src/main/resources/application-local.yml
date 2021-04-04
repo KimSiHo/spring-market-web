@@ -1,0 +1,27 @@
+# 어플리케이션의 호스트 부분
+app:
+  host: http://localhost:8080
+
+#업로드 포트
+server:
+  port: 8080
+
+#로컬 파일 시스템 업로드 경로 ( 사용중 x )
+local:
+  filesystem:
+    upload:
+      path: C:\Users\김시호\Desktop\app이미지
+
+spring:
+  #JPA 설정
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+#로깅 관련
+logging:
+  level:
+    root: debug
+  logback:
+    rollingpolicy:
+      clean-history-on-start:

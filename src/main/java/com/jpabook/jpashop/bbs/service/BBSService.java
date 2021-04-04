@@ -17,7 +17,9 @@ public class BBSService {
 
     public Page<Post> getPostList(Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.ASC, "id"));
+        int postPerPage = pageable.getPageSize();
+
+        pageable = PageRequest.of(page, postPerPage, Sort.by(Sort.Direction.ASC, "id"));
 
         return postRepository.findAll(pageable);
     }

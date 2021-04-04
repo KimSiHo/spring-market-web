@@ -4,6 +4,7 @@ import com.jpabook.jpashop.account.service.AccountService;
 import com.jpabook.jpashop.account.web.CurrentUser;
 import com.jpabook.jpashop.account.domain.Account;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;

@@ -9,41 +9,23 @@ spring:
     console:
       enabled: true
 
+  #프로필 관련
+  profiles:
+    include: credentials
+
   #JPA 설정
   jpa:
-    hibernate:
-      ddl-auto: create
     properties:
       hibernate:
         #show_sql: true
         format_sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-  #프로필 관련
-  profiles:
-    active: local
-    include: credentials
-
   #파일 업로드 관련
   servlet:
     multipart:
       max-file- size: 10MB
       max-request-size: 10MB
-
-
-#로깅 관련
-logging:
-  level:
-    root: debug
-  logback:
-    rollingpolicy:
-      clean-history-on-start:
-
-
-#업로드 포트
-server:
-  port: 7070
-
 
 #AWS s3 업로드 경로 ( 상품 이미지 )
 cloud:
@@ -57,10 +39,3 @@ cloud:
       auto: false
     credentials:
       instanceProfile: true
-
-
-#로컬 파일 시스템 업로드 경로 ( 사용중 x )
-local:
-  filesystem:
-    upload:
-      path: C:\Users\김시호\Desktop\app이미지

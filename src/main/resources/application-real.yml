@@ -1,0 +1,18 @@
+# 어플리케이션의 호스트 부분
+app:
+  host: http://localhost:8080
+
+#업로드 포트
+server:
+  port: 80
+
+spring:
+  #JPA 설정
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+#로깅 관련
+logging:
+  level:
+    root: error

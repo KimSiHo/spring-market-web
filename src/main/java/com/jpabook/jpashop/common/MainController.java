@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @SessionAttributes("notificationsCount")
@@ -24,8 +25,8 @@ public class MainController {
     private final NotificationRepository notificationRepository;
 
     @GetMapping("/")
-    public String home(@CurrentUser Account account, Model model) {
-        System.out.println("=========================");
+    public String home(@CurrentUser Account account, Model model, HttpSession session) {
+
 
         //메인 페이지에 보여줄 8개의 상품들 조회
         List<Product> computers = productRepository.findTop8ByProductStatusAndProductKind(ProductStatus.onSale, ProductKind.computer);
@@ -38,6 +39,7 @@ public class MainController {
 
             Long notifationsCount = notificationRepository.countRecvMsgByRecipient(account);
             model.addAttribute("notificationsCount", notifationsCount);
+            session.setAttribute("notificationsCount", notifationsCount);
         }
 
         model.addAttribute("computers", computers);

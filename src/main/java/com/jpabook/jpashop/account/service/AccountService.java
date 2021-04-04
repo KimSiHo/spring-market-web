@@ -5,8 +5,12 @@ import com.jpabook.jpashop.account.domain.AccountRepository;
 import com.jpabook.jpashop.account.domain.Account;
 
 import com.jpabook.jpashop.account.web.SignUpForm;
+import com.jpabook.jpashop.common.config.AppProperties;
+import com.jpabook.jpashop.common.mail.EmailMessage;
+import com.jpabook.jpashop.common.mail.EmailService;
 import com.jpabook.jpashop.settings.web.Profile;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,18 +22,23 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.validation.Valid;
 import java.util.Arrays;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class AccountService implements UserDetailsService {
 
     private final AccountRepository accountRepository;
-    private final JavaMailSender javaMailSender;
+    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
+    private final TemplateEngine templateEngine;
+    private final AppProperties appProperties;
 
     public Account processNewAccount(SignUpForm signUpForm) {
         Account newAccount = saveNewAccount(signUpForm);
@@ -48,12 +57,25 @@ public class AccountService implements UserDetailsService {
     }
 
     public void sendSignUpConfirmEmail(Account newAccount) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(newAccount.getEmail());
-        mailMessage.setSubject("아나바다, 회원 가입 인증");
-        mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() +
+
+        log.debug("이용 메일 SERVICE : {}", emailService.getClass() );
+
+        Context context = new Context();
+        context.setVariable("link", "/check-email-token?token=" + newAccount.getEmailCheckToken() +
                 "&email=" + newAccount.getEmail());
-        javaMailSender.send(mailMessage);
+        context.setVariable("nickname", newAccount.getNickname());
+        context.setVariable("linkName", "이메일 인증하기");
+        context.setVariable("message", "아나바다 마켓 서비스를 사용하려면 링크를 클릭하세요.");
+        context.setVariable("host", appProperties.getHost());
+        String message = templateEngine.process("mail/simple-link", context);
+
+        EmailMessage emailMessage = EmailMessage.builder()
+                .to(newAccount.getEmail())
+                .subject("아나바다 마켓 회원 인증 메일")
+                .message(message)
+                .build();
+
+        emailService.sendEmail(emailMessage);
     }
 
     public void completeSignUp(Account account) {
