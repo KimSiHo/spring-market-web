@@ -72,13 +72,6 @@ public class DataInsert implements ApplicationRunner {
     }
 
     private void createPost(Account account) {
-
-        var datetime = LocalDateTime.of(2020, 5, 24, 14, 0);
-        var instant = ZonedDateTime.of(datetime, ZoneId.systemDefault()).toInstant();
-        var clock = Clock.fixed(instant, ZoneId.systemDefault());
-
-        Instant.now(clock);
-
         IntStream.rangeClosed(1, 154).forEach(i -> {
             Post newPost = Post.builder()
                                .title("test" + i)

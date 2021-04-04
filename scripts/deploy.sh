@@ -33,4 +33,4 @@ chmod +x $REPOSITORY/$JAR_NAME
 
 echo "> $JAR_NAME 실행"
 
-nohup java -jar $REPOSITORY/$JAR_NAME 2>&1 &
+nohup java -Dspring.profiles.active=real -jar $REPOSITORY/$JAR_NAME 2>&1 &
