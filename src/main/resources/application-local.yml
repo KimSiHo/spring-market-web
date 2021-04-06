@@ -4,7 +4,7 @@ app:
 
 #업로드 포트
 server:
-  port: 80
+  port: 8080
 
 #로컬 파일 시스템 업로드 경로 ( 사용중 x )
 local:
