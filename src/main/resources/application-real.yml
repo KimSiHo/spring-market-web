@@ -1,6 +1,6 @@
 # 어플리케이션의 호스트 부분
 app:
-  host: http://localhost:8080
+  host: http://anabada-shop.tk
 
 #업로드 포트
 server:
