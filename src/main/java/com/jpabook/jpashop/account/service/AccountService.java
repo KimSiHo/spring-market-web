@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.util.Arrays;
 
