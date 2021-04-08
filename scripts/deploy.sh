@@ -3,6 +3,10 @@
 REPOSITORY=/home/ec2-user/spring-market-web
 PROJECT_NAME=spring-market-web
 
+echo "> 관리자 권한 획득"
+
+sudo -s <<EOF
+
 echo "> Build 파일 복사"
 
 cp $REPOSITORY/zip/target/*.jar $REPOSITORY/
@@ -34,3 +38,5 @@ chmod +x $REPOSITORY/$JAR_NAME
 echo "> $JAR_NAME 실행"
 
 nohup java -Dspring.profiles.active=real -jar $REPOSITORY/$JAR_NAME 2>&1 &
+
+EOF

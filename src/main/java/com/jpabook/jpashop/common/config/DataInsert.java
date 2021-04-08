@@ -40,8 +40,15 @@ import java.util.stream.IntStream;
 
 @Profile("!test")
 @RequiredArgsConstructor
-@Component
+//@Component
 @Order(0)
+
+/*first run this component by IDE
+later disable
+running this with jar file cause error
+# cause java.io.File cannnot resolve jar: protocol
+*/
+
 public class DataInsert implements ApplicationRunner {
 
     private final AccountRepository accountRepository;
@@ -54,7 +61,7 @@ public class DataInsert implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Account account = createAccount("kim125y", "kim125y@naver.com", "wkwjsrj");
+       /* Account account = createAccount("kim125y", "kim125y@naver.com", "wkwjsrj");
         Account account1 = createAccount("odreamgodo", "odreamgodo@naver.com", "wkwjsrj");
         Account account2 = createAccount("kim125", "kim125@naver.com", "wkwjsrj");
         Account account3 = createAccount("kim9810", "kim9810@naver.com", "wkwjsrj");
@@ -67,11 +74,11 @@ public class DataInsert implements ApplicationRunner {
         createNoti(account3, buyRequestProduct2.getAccount(), buyRequestProduct2, "구매 요청합니다");
 
         createPost(account);
-
+*/
 
     }
 
-    private void createPost(Account account) {
+    /*private void createPost(Account account) {
         IntStream.rangeClosed(1, 154).forEach(i -> {
             Post newPost = Post.builder()
                                .title("test" + i)
@@ -97,13 +104,13 @@ public class DataInsert implements ApplicationRunner {
     }
 
     private List<Product> createProduct() throws IOException {
-        String root = "init-data/";
+        String root = "src/main/resources/init-data/";
         String[] categories = {"computer", "electronic", "furniture", "cloth", "shoes"};
 
         List<Product> retProducts = new ArrayList<Product>();
         for (String category : categories) {
             String strCategoryDirectory = root + category;
-            /*String strProductDescDirectory = strCategoryDirectory + "\\product-description";*/
+            *//*String strProductDescDirectory = strCategoryDirectory + "\\product-description";*//*
             String strProductDescDirectory = strCategoryDirectory + "/product-description";
 
             File categoryDirectory = new File(strCategoryDirectory);
@@ -190,7 +197,7 @@ public class DataInsert implements ApplicationRunner {
         String extension = FilenameUtils.getExtension(productImgfile.getName());
 
         String strPaentDir = productImgfile.getParent();
-        /*String strResizeDir = strPaentDir + "\\resized\\";*/
+        *//*String strResizeDir = strPaentDir + "\\resized\\";*//*
         String strResizeDir = strPaentDir + "/resized/";
         String strDestFile = strResizeDir + productImgfile.getName();
         File destFile = new File(strDestFile);
@@ -214,5 +221,5 @@ public class DataInsert implements ApplicationRunner {
                 .build();
 
         return accountRepository.save(account);
-    }
+    }*/
 }
