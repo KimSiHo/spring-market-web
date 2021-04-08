@@ -97,7 +97,7 @@ public class DataInsert implements ApplicationRunner {
     }
 
     private List<Product> createProduct() throws IOException {
-        String root = "src/main/resources/init-data/";
+        String root = "init-data/";
         String[] categories = {"computer", "electronic", "furniture", "cloth", "shoes"};
 
         List<Product> retProducts = new ArrayList<Product>();
