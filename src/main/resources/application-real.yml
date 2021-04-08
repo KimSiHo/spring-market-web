@@ -12,6 +12,10 @@ spring:
     hibernate:
       ddl-auto: update
 
+  #프로필 관련
+  profiles:
+    include: credentials
+
 #로깅 관련
 logging:
   level:
