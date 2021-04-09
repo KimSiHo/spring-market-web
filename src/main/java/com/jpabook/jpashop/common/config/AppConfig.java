@@ -1,5 +1,6 @@
 package com.jpabook.jpashop.common.config;
 
+import com.jpabook.jpashop.common.aws.dto.S3Component;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
