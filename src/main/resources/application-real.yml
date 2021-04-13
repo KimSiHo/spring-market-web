@@ -4,17 +4,13 @@ app:
 
 #업로드 포트
 server:
-  port: 8080
+  port: 80
 
 spring:
   #JPA 설정
   jpa:
     hibernate:
       ddl-auto: update
-
-  #프로필 관련
-  profiles:
-    include: credentials
 
 #로깅 관련
 logging:
