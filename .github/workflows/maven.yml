@@ -25,7 +25,7 @@ jobs:
         java-version: 11
         
     - name: Decrypt Services
-      run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$GPG_SECRET" --output /src/main/resources/application-credentials.yml /src/main/resources/application-credentials.yml.gpg
+      run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$GPG_SECRET" --output src/main/resources/application-credentials.yml src/main/resources/application-credentials.yml.gpg
 
       env:
         GPG_SECRET: $
