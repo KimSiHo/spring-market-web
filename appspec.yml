@@ -3,7 +3,7 @@ os: linux
 files:
   - source: /
     destination: /home/ec2-user/spring-market-web/zip/
-    overwrite: yes
+    overwrite: merge
 
 permissions:
   - object: /
