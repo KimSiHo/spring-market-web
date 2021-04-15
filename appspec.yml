@@ -12,6 +12,11 @@ permissions:
     group: ec2-user
 
 hooks:
+  BeforeInstall:
+  - location: scripts/beforeInstall.sh
+    timeout: 60
+    runas: ec2-user
+
   ApplicationStart:
   - location: scripts/deploy.sh
     timeout: 60
