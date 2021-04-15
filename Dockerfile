@@ -1,9 +1,13 @@
 FROM openjdk:11.0
 
-EXPOSE 8080
+LABEL maintainer="kim125y@naver.com"
 
-JAR_FILE=target/jpashop-0.0.1-SNAPSHOT.jar
+EXPOSE 80
 
-ADD ${JAR_FILE} jpaShop.jar
+EXPOSE 5432
 
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/jpaShop.jar"]
+ARG JAR_FILE=target/jpashop-0.0.1-SNAPSHOT.jar
+
+COPY ${JAR_FILE} jpaShop.jar
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=real", "-jar", "/jpaShop.jar"]
