@@ -50,7 +50,7 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: |
-          ghcr.io/${{ github.repository_owner }}/spring-market-web:latest
+          ghcr.io/kim125y/spring-market-web:latest
 
     - name: Make zip file 
       run: zip -r ./$GITHUB_SHA.zip . 
