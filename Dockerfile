@@ -1,4 +1,4 @@
-FROM openjdk:11.0
+FROM openjdk:11.0-oracle
 
 LABEL maintainer="kim125y@naver.com"
 
