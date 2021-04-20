@@ -10,4 +10,4 @@ ARG JAR_FILE=target/jpashop-0.0.1-SNAPSHOT.jar
 
 COPY ${JAR_FILE} jpaShop.jar
 
-ENTRYPOINT ["java", "-Dspring.profiles.active=real", "-jar", "/jpaShop.jar"]
+#ENTRYPOINT ["java", "-Dspring.profiles.active=real", "-jar", "/jpaShop.jar"]
