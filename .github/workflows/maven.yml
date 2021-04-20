@@ -49,7 +49,7 @@ jobs:
         context: .
         file: Dockerfile
         push: true
-        tags: ghcr.io/kim125y/spring-market-web:latest
+        tags: ghcr.io/kimsiho/spring-market-web:latest
 
     - name: Make zip file 
       run: zip -r ./$GITHUB_SHA.zip . 
